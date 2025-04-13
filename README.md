@@ -20,7 +20,7 @@ The website was developed with a focus on **performance, user experience, and mo
 | Authentication | Firebase Auth (Email + Google Login) |
 | Database | Firebase Firestore |
 | Hosting | Netlify |
-| Backend Email Handling | Firebase Functions (or 3rd-party backend for sending to Gmail) |
+| Backend Email Handling | Firebase Functions  |
 | SEO Optimization | Meta Tags, sitemap.xml |
 | Animation | CSS Transitions & JavaScript-based Animations |
 | Responsive Design | Mobile-first Layout, Flexbox, Media Queries |
