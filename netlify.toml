@@ -1,0 +1,23 @@
+[build]
+  publish = "/"
+
+# Force HTTPS
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Add canonical URLs in meta tags
+[build.processing]
+  skip_processing = false
+[build.processing.html]
+  pretty_urls = true
+
+[forms]
+  [forms."checkout-form"]
+    fields = { name = "string", email = "email", phone = "string", governorate = "string", address = "string", "payment-method" = "string", "cart-items" = "string", "total-amount" = "string" }
+    file = { "payment-screenshot" = "image/*" } 

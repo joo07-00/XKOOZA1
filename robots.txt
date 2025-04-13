@@ -1,0 +1,61 @@
+# XKOOZA Robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://xkooza.netlify.app/sitemap.xml 
+Allow: /collections/
+Allow: /about/
+Allow: /contact/
+Allow: /summer/
+Allow: /winter/
+Allow: /last-collection/
+
+# Protect sensitive pages and directories
+Disallow: /checkout/
+Disallow: /admin/
+Disallow: /cart/
+Disallow: /account/
+Disallow: /api/
+Disallow: /cgi-bin/
+Disallow: /includes/
+Disallow: /temp/
+Disallow: /*?*
+Disallow: /*?order=
+Disallow: /*?sort=
+Disallow: /assets/downloads/
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /*.txt$
+Disallow: /*.md$
+
+# Allow specific bots with rate limiting
+User-agent: Googlebot
+Crawl-delay: 1
+Allow: /
+
+User-agent: Bingbot
+Crawl-delay: 2
+Allow: /
+
+User-agent: DuckDuckBot
+Crawl-delay: 2
+Allow: /
+
+# Block known bad bots
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+# Clean Parameters
+Allow: /*.js
+Allow: /*.css
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.ico 

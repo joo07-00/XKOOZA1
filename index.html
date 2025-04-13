@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XKOOZA - Modern Egyptian Streetwear Fashion & Urban Clothing Brand</title>
+    <meta name="description" content="XKOOZA - Egypt's premium streetwear fashion brand offering unique urban clothing collections. Shop our latest summer and winter collections featuring contemporary Egyptian streetwear designs. Free shipping available.">
+    <meta name="keywords" content="XKOOZA, Egyptian streetwear, urban fashion, modern clothing, Cairo fashion, summer collection, winter collection, premium streetwear">
+    
+    <!-- Google Analytics with performance optimizations -->
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://www.google-analytics.com">
+    
+    <!-- Google tag (gtag.js) with async -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZHPB9RD6D"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        // Configure analytics with additional settings
+        gtag('config', 'G-QZHPB9RD6D', {
+            'anonymize_ip': true,
+            'page_title': document.title,
+            'page_path': window.location.pathname,
+            'send_page_view': true
+        });
+    </script>
+
+    <!-- External Libraries -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+    <link rel="canonical" href="https://xkooza.netlify.app/" />
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "XKOOZA",
+        "url": "https://xkooza.netlify.app",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://xkooza.netlify.app/collections?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        },
+        "brand": {
+            "@type": "Brand",
+            "name": "XKOOZA",
+            "logo": "https://xkooza.netlify.app/assets/XZ.png",
+            "description": "Premium Egyptian streetwear fashion brand offering unique urban clothing collections",
+            "slogan": "Modern Egyptian Streetwear Fashion",
+            "foundingLocation": {
+                "@type": "Place",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "Egypt"
+                }
+            }
+        },
+        "sameAs": [
+            "https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr",
+            "https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1",
+            "https://www.facebook.com/share/19wx7EieiN/"
+        ]
+    }
+    </script>
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://xkooza.netlify.app/">
+    <meta property="og:title" content="XKOOZA - Modern Egyptian Streetwear Fashion & Urban Clothing Brand">
+    <meta property="og:description" content="XKOOZA - Egypt's premium streetwear fashion brand offering unique urban clothing collections. Shop our latest summer and winter collections featuring contemporary Egyptian streetwear designs.">
+    <meta property="og:image" content="https://xkooza.netlify.app/assets/xkooza.png">
+    <meta property="og:site_name" content="XKOOZA">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:image:alt" content="XKOOZA Logo">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://xkooza.netlify.app/">
+    <meta name="twitter:title" content="XKOOZA - Modern Egyptian Streetwear Fashion & Urban Clothing Brand">
+    <meta name="twitter:description" content="XKOOZA - Egypt's premium streetwear fashion brand offering unique urban clothing collections. Shop our latest collections.">
+    <meta name="twitter:image" content="https://xkooza.netlify.app/assets/xkooza.png">
+    <meta name="twitter:image:alt" content="XKOOZA Logo">
+
+    <!-- Additional Social Meta Tags -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="XKOOZA Egyptian Streetwear Brand">
+    <meta name="twitter:image:alt" content="XKOOZA Egyptian Streetwear Brand">
+
+    <!-- Facebook Specific -->
+    <meta property="fb:app_id" content="your_fb_app_id">
+    <meta property="article:author" content="https://www.facebook.com/share/19wx7EieiN/">
+    <meta property="article:publisher" content="https://www.facebook.com/share/19wx7EieiN/">
+
+    <!-- Instagram and TikTok -->
+    <meta property="og:see_also" content="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr">
+    <meta property="og:see_also" content="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1">
+
+    <!-- Pinterest Verification -->
+    <meta name="p:domain_verify" content="your_pinterest_verification_code">
+</head>
+<body>
+    <!-- Add this right after the opening <body> tag -->
+    <div class="terms-popup" id="termsPopup">
+        <div class="terms-content">
+            <div class="terms-text">
+                <p>By using this website, you agree to our Terms of Service and Privacy Policy.</p>
+            </div>
+            <div class="terms-buttons">
+                <button id="acceptTerms" class="accept-btn">Accept</button>
+                <button id="declineTerms" class="decline-btn">Decline</button>
+            </div>
+            <div class="terms-link">
+                <a href="terms.html" target="_blank">Read our Terms & Conditions</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <button class="hamburger">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <a href="index.html" class="nav-logo">XKOOZA</a>
+        <div class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="collections.html">Collections</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="mobile-nav-links">
+            <a href="index.html" class="active">Home</a>
+            <div class="mobile-menu-item">
+                <a href="collections.html">Collections</a>
+                <div class="sub-menu">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <div class="mobile-social-links">
+                <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-tiktok"></i> TikTok
+                </a>
+                <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook"></i> Facebook
+                </a>
+            </div>
+        </div>
+       
+        <div class="cart-icon-container">
+            <a href="checkout.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-badge"></span>
+            </a>
+            <a href="signin.html" class="user-icon">
+                <i class="fas fa-user"></i>
+                <div class="user-dropdown">
+                    <a href="signin.html">Sign In</a>
+                    <a href="signup.html">Sign Up</a>
+                </div>
+            </a>
+        </div>
+    </nav>
+
+
+    <!-- Landing Page Section -->
+    <section id="home" class="landing">
+        <h1 class="main-title">XKOOZA - Premium Streetwear Fashion</h1>
+        <div class="landing-content">
+            <div class="left-content">
+                <div class="cta-content">
+                    <button class="shop-now-btn" data-aos="fade-up" onclick="window.location.href='collections.html'">Shop Now</button>
+                    <div class="social-links" data-aos="fade-left">
+                        <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.snapchat.com/add/xkooza7?share_id=AQuoje-4wLU&locale=en-US" class="social-icon"><i class="fab fa-snapchat"></i></a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="right-content">
+                <div class="logo-container">
+                    <img src="assets/logo.png" alt="XKOOZA Logo" class="main-logo">
+                </div>
+            </div>
+        </div>
+        <div class="background-animation"></div>
+    </section>
+
+    <!-- Collections Preview Section -->
+    <section id="collections" class="collections-preview">
+        <h2 class="section-title">Latest Streetwear Collection</h2>
+        <p data-aos="fade-up" data-aos-delay="200">Discover our newest streetwear designs that blend urban culture with contemporary fashion.</p>
+        <a href="last-collection.html" class="view-collection-btn" data-aos="fade-up" data-aos-delay="400">View Collection</a>
+    </section>
+
+    <!-- Brief About Section -->
+    <section class="brief-about">
+        <div class="brief-about-content">
+            <h2 data-aos="fade-up">Our Story</h2>
+            <p data-aos="fade-up" data-aos-delay="200">XKOOZA was born from the creative synergy of six friends united by our passion for streetwear and urban culture. Each bringing unique perspectives and skills to the table, we transformed our shared vision into a brand that pushes the boundaries of contemporary fashion.</p>
+            <a href="about.html" class="shop-now-btn" data-aos="fade-up" data-aos-delay="400">Learn More About Us</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-container" data-aos="fade-up">
+            <h2>Stay Updated</h2>
+            <div class="newsletter-container">
+                <p>Subscribe to receive updates about new collections, exclusive offers, and special events.</p>
+                <form id="newsletter-form" name="newsletter-form" class="newsletter-form" netlify>
+                    <div class="form-group">
+                        <input type="email" id="subscriber-email" name="email" placeholder="Enter your email" required>
+                        <button type="submit" class="subscribe-btn">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="xkooza-logo">
+                <img src="assets/logo.png" alt="XKooza Logo">
+            </div>
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="collections.html">Collections</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="terms.html">Terms & Conditions</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Collections</h3>
+                <div class="footer-links">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 XKOOZA. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+    <script>
+        // Initialize cart badge
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartIcon = document.querySelector('.cart-icon');
+            if (cartIcon) {
+                // Remove any existing badge first to avoid duplicates
+                const existingBadge = cartIcon.querySelector('.cart-badge');
+                if (existingBadge) {
+                    existingBadge.remove();
+                }
+
+                // Create and append the badge
+                const badge = document.createElement('span');
+                badge.className = 'cart-badge';
+                cartIcon.appendChild(badge);
+
+                // Add shopping cart icon if it doesn't exist
+                if (!cartIcon.querySelector('.fas.fa-shopping-cart')) {
+                    const cartIconElement = document.createElement('i');
+                    cartIconElement.className = 'fas fa-shopping-cart';
+                    cartIcon.insertBefore(cartIconElement, badge);
+                }
+            }
+            
+            // Update the badge
+            updateCartBadge();
+        });
+    </script>
+    <div class="brand-mark" id="brandMark">
+        <img src="assets/logo.png" alt="XKooza Brand Mark">
+    </div>
+
+    <div class="social-menu" id="socialMenu">
+        <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="instagram" target="_blank">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="tiktok" target="_blank">
+            <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.facebook.com/share/19wx7EieiN/" class="facebook" target="_blank">
+            <i class="fab fa-facebook"></i>
+        </a>
+    </div>
+
+    <!-- Terms and Conditions Popup -->
+    <div class="terms-popup" id="termsPopup">
+        <div class="terms-content">
+            <div class="terms-text">
+                <p>By using this website, you agree to our Terms of Service and Privacy Policy.</p>
+            </div>
+            <div class="terms-buttons">
+                <button id="acceptTerms" class="accept-btn">Accept</button>
+                <button id="declineTerms" class="decline-btn">Decline</button>
+            </div>
+            <div class="terms-link">
+                <a href="terms.html" target="_blank">Read our Terms & Conditions</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics-compat.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html> 

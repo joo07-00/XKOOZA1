@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - XKOOZA</title>
+    
+    <!-- External Libraries -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+     <!-- Navbar -->
+     <nav class="navbar">
+        <button class="hamburger">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <a href="index.html" class="nav-logo">XKOOZA</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="collections.html">Collections</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="mobile-nav-links">
+            <a href="index.html" class="active">Home</a>
+            <div class="mobile-menu-item">
+                <a href="collections.html">Collections</a>
+                <div class="sub-menu">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <div class="mobile-social-links">
+                <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-tiktok"></i> TikTok
+                </a>
+                <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook"></i> Facebook
+                </a>
+            </div>
+        </div>
+       
+        <div class="cart-icon-container">
+            <a href="checkout.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-badge"></span>
+            </a>
+            <a href="signin.html" class="user-icon">
+                <i class="fas fa-user"></i>
+                <div class="user-dropdown">
+                    <a href="signin.html">Sign In</a>
+                    <a href="signup.html">Sign Up</a>
+                </div>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Authentication Section -->
+    <section class="auth-section">
+        <div class="auth-container" data-aos="fade-up">
+            <div class="auth-box">
+                <div class="auth-header">
+                    <div class="auth-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h2>Create Account</h2>
+                </div>
+
+                <form id="signupForm" class="auth-form">
+                    <div class="form-group">
+                        <input type="text" id="fullName" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Sign Up</button>
+                </form>
+
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+
+                <div class="social-auth">
+                    <p>Or sign up with:</p>
+                    <div class="social-buttons">
+                        <button class="social-btn google-auth">
+                            <i class="fab fa-google"></i>
+                            Sign up with Google
+                        </button>
+                    </div>
+                </div>
+
+                <div class="auth-footer">
+                    Already have an account? <a href="signin.html">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="xkooza-logo">
+                <img src="assets/logo.png" alt="XKooza Logo">
+            </div>
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="collections.html">Collections</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="terms.html">Terms & Conditions</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Collections</h3>
+                <div class="footer-links">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 XKOOZA. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+    <script>
+        // Initialize cart badge
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartIcon = document.querySelector('.cart-icon');
+            if (cartIcon) {
+                // Remove any existing badge first to avoid duplicates
+                const existingBadge = cartIcon.querySelector('.cart-badge');
+                if (existingBadge) {
+                    existingBadge.remove();
+                }
+
+                // Create and append the badge
+                const badge = document.createElement('span');
+                badge.className = 'cart-badge';
+                cartIcon.appendChild(badge);
+
+                // Add shopping cart icon if it doesn't exist
+                if (!cartIcon.querySelector('.fas.fa-shopping-cart')) {
+                    const cartIconElement = document.createElement('i');
+                    cartIconElement.className = 'fas fa-shopping-cart';
+                    cartIcon.insertBefore(cartIconElement, badge);
+                }
+            }
+            
+            // Update the badge
+            updateCartBadge();
+        });
+    </script>
+    <div class="brand-mark" id="brandMark">
+        <img src="assets/logo.png" alt="XKooza Brand Mark">
+    </div>
+
+    <div class="social-menu" id="socialMenu">
+        <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="instagram" target="_blank">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="tiktok" target="_blank">
+            <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.facebook.com/share/19wx7EieiN/" class="facebook" target="_blank">
+            <i class="fab fa-facebook"></i>
+        </a>
+    </div>
+
+    <!-- Terms and Conditions Popup -->
+    <div class="terms-popup" id="termsPopup">
+        <div class="terms-content">
+            <div class="terms-text">
+                <p>By using this website, you agree to our Terms of Service and Privacy Policy.</p>
+            </div>
+            <div class="terms-buttons">
+                <button id="acceptTerms" class="accept-btn">Accept</button>
+                <button id="declineTerms" class="decline-btn">Decline</button>
+            </div>
+            <div class="terms-link">
+                <a href="terms.html" target="_blank">Read our Terms & Conditions</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    <script src="script.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics-compat.js"></script>
+    
+    <!-- Firebase Config -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDqBWf2jaKYrJdjpOq8Yoa1_OoMVn4TGsQ",
+            authDomain: "xkooza-072.firebaseapp.com",
+            projectId: "xkooza-072",
+            storageBucket: "xkooza-072.firebasestorage.app",
+            messagingSenderId: "530733516957",
+            appId: "1:530733516957:web:8ad9b191a8902211dcec74",
+            measurementId: "G-PLYZLT365D"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const analytics = firebase.analytics();
+
+        // Handle Sign Up
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                showToast("Passwords don't match!", 'error');
+                return;
+            }
+            
+            // Create user
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed up successfully
+                    const user = userCredential.user;
+                    console.log('Signed up:', user);
+                    
+                    // Add user to Firestore
+                    return db.collection('users').doc(user.uid).set({
+                        email: email,
+                        createdAt: new Date(),
+                    });
+                })
+                .then(() => {
+                    showToast("Account created successfully!", 'success');
+                    window.location.href = 'profile.html'; // Redirect to profile page
+                })
+                .catch((error) => {
+                    showToast('An error occurred while creating your account. Please try again.', 'error');
+                });
+        });
+
+        // Handle Google Sign Up
+        const googleBtn = document.querySelector('.google-auth');
+        googleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const provider = new firebase.auth.GoogleAuthProvider();
+            // Add scopes for Google OAuth
+            provider.addScope('profile');
+            provider.addScope('email');
+            
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    const isNewUser = result.additionalUserInfo.isNewUser;
+                    
+                    // Store user data in Firestore
+                    return db.collection('users').doc(user.uid).set({
+                        email: user.email,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL,
+                        createdAt: isNewUser ? new Date() : firebase.firestore.FieldValue.serverTimestamp(),
+                        lastLogin: new Date()
+                    }, { merge: true }); // Update without overwriting
+                })
+                .then(() => {
+                    showToast("Account created successfully!", 'success');
+                    window.location.href = 'profile.html';
+                })  
+                .catch((error) => {
+                    if (error.code === 'auth/popup-blocked') {
+                        // If popup is blocked, try redirect method
+                        auth.signInWithRedirect(provider);
+                    } else {
+                        showToast('An error occurred while signing up with Google. Please try again.', 'error');
+                    }
+                });
+        });
+
+        // Handle redirect result
+        auth.getRedirectResult().then((result) => {
+            if (result.user) {
+                showToast("Account created successfully!", 'success');
+                window.location.href = 'profile.html';
+            }
+        }).catch((error) => {
+            showToast('An error occurred while signing up with Google. Please try again.', 'error');
+        });
+    </script>
+</body>
+</html> 

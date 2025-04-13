@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - XKOOZA</title>
+    
+    <!-- External Libraries -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+   <!-- Navbar -->
+   <nav class="navbar">
+    <button class="hamburger">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </button>
+    <a href="index.html" class="nav-logo">XKOOZA</a>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="collections.html">Collections</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </div>
+    <div class="mobile-nav-links">
+        <a href="index.html" class="active">Home</a>
+        <div class="mobile-menu-item">
+            <a href="collections.html">Collections</a>
+            <div class="sub-menu">
+                <a href="last-collection.html">Latest Collection</a>
+                <a href="summer.html">Summer Collection</a>
+                <a href="winter.html">Winter Collection</a>
+            </div>
+        </div>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <div class="mobile-social-links">
+            <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-tiktok"></i> TikTok
+            </a>
+            <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i> Facebook
+            </a>
+        </div>
+    </div>
+   
+    <div class="cart-icon-container">
+        <a href="checkout.html" class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge"></span>
+        </a>
+        <a href="signin.html" class="user-icon">
+            <i class="fas fa-user"></i>
+            <div class="user-dropdown">
+                <a href="signin.html">Sign In</a>
+                <a href="signup.html">Sign Up</a>
+            </div>
+        </a>
+    </div>
+</nav>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="profile-container" data-aos="fade-up">
+            <!-- User Info -->
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-info">
+                    <h2 id="userName">Loading...</h2>
+                    <p id="userEmail">Loading...</p>
+                </div>
+                <div class="profile-actions">
+                    <button id="signoutBtn" class="profile-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+
+            <!-- Order History -->
+            <div class="orders-section">
+                <h3>Order History</h3>
+                <div id="ordersList" class="orders-list">
+                    <!-- Orders will be populated here -->
+                    <p class="no-orders">No orders yet</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Change Password Modal -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Change Password</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="changePasswordForm" class="password-form">
+                <div class="form-group">
+                    <input type="password" id="currentPassword" placeholder="Current Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="newPassword" placeholder="New Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" required>
+                </div>
+                <button type="submit" class="auth-btn">Update Password</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="xkooza-logo">
+                <img src="assets/logo.png" alt="XKooza Logo">
+            </div>
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="collections.html">Collections</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="terms.html">Terms & Conditions</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Collections</h3>
+                <div class="footer-links">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 XKOOZA. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+    <script>
+        // Initialize cart badge
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartIcon = document.querySelector('.cart-icon');
+            if (cartIcon) {
+                // Remove any existing badge first to avoid duplicates
+                const existingBadge = cartIcon.querySelector('.cart-badge');
+                if (existingBadge) {
+                    existingBadge.remove();
+                }
+
+                // Create and append the badge
+                const badge = document.createElement('span');
+                badge.className = 'cart-badge';
+                cartIcon.appendChild(badge);
+
+                // Add shopping cart icon if it doesn't exist
+                if (!cartIcon.querySelector('.fas.fa-shopping-cart')) {
+                    const cartIconElement = document.createElement('i');
+                    cartIconElement.className = 'fas fa-shopping-cart';
+                    cartIcon.insertBefore(cartIconElement, badge);
+                }
+            }
+            
+            // Update the badge
+            updateCartBadge();
+        });
+    </script>
+    <div class="brand-mark" id="brandMark">
+        <img src="assets/logo.png" alt="XKooza Brand Mark">
+    </div>
+
+    <div class="social-menu" id="socialMenu">
+        <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="instagram" target="_blank">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="tiktok" target="_blank">
+            <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.facebook.com/share/19wx7EieiN/" class="facebook" target="_blank">
+            <i class="fab fa-facebook"></i>
+        </a>
+    </div>
+
+    <!-- Terms and Conditions Popup -->
+    <div class="terms-popup" id="termsPopup">
+        <div class="terms-content">
+            <div class="terms-text">
+                <p>By using this website, you agree to our Terms of Service and Privacy Policy.</p>
+            </div>
+            <div class="terms-buttons">
+                <button id="acceptTerms" class="accept-btn">Accept</button>
+                <button id="declineTerms" class="decline-btn">Decline</button>
+            </div>
+            <div class="terms-link">
+                <a href="terms.html" target="_blank">Read our Terms & Conditions</a>
+            </div>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <!-- Custom Scripts -->
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
