@@ -15,7 +15,7 @@ The website was developed with a focus on **performance, user experience, and mo
 
 | Feature | Technology |
 |--------|-------------|
-| Structure & Styling | HTML5, CSS3 |
+| Structure & Styling | HTML, CSS |
 | Interactivity | Vanilla JavaScript |
 | Authentication | Firebase Auth (Email + Google Login) |
 | Database | Firebase Firestore |
