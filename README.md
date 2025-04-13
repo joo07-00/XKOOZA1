@@ -91,7 +91,3 @@ The website was developed with a focus on **performance, user experience, and mo
 
 This project was built with ❤️ by the XKOOZA team.  
 Developed from scratch with a deep passion for fashion and digital innovation.
-
----
-
-> Feel free to fork, star, or reach out if you'd like to collaborate or explore more about how it was built!
