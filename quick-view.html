@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick View - Product Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <style>
+        .quick-view-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #000000;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: #c9c9c9a6;
+        }
+
+        .quick-view-image {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        #quickViewImage {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Navigation Buttons for Images */
+        .prev,
+        .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 10;
+            font-size: 24px;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quick-view-container">
+        <button class="back-button" onclick="window.history.back();">X</button>
+        <div class="quick-view-image">
+            <button class="prev" id="prevImageButton">←</button>
+            <img id="quickViewImage" src="" alt="Product Image">
+            <button class="next" id="nextImageButton">→</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const productDetails = JSON.parse(localStorage.getItem('quickViewProduct'));
+
+            if (productDetails) {
+                const images = productDetails.images; // الحصول على جميع الصور
+                let currentImageIndex = 0; // تتبع فهرس الصورة الحالية
+
+                // تعيين الصورة الأولية
+                document.getElementById('quickViewImage').src = images[currentImageIndex];
+
+                // دالة لتغيير الصورة
+                window.changeImage = function (direction) {
+                    currentImageIndex += direction; // تحديث الفهرس بناءً على الاتجاه
+                    if (currentImageIndex < 0) {
+                        currentImageIndex = images.length - 1; // العودة إلى آخر صورة
+                    } else if (currentImageIndex >= images.length) {
+                        currentImageIndex = 0; // العودة إلى أول صورة
+                    }
+                    document.getElementById('quickViewImage').src = images[currentImageIndex]; // تحديث مصدر الصورة
+                };
+
+                // إضافة مستمعي الأحداث للأزرار لتغيير الصور
+                document.getElementById('prevImageButton').addEventListener('click', () => changeImage(-1));
+                document.getElementById('nextImageButton').addEventListener('click', () => changeImage(1));
+            }
+        });
+    </script>
+</body>
+
+</html>

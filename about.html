@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About XKOOZA - Egyptian Urban Streetwear Brand Story</title>
-    <meta name="description" content="Discover the story of XKOOZA, a creative Egyptian streetwear brand founded by six friends in Cairo. Learn how our passion for urban fashion and contemporary design shapes Egypt's streetwear culture.">
-    <meta name="keywords" content="XKOOZA brand, Egyptian streetwear brand, Cairo fashion story, Egyptian fashion, brand history, urban fashion Egypt">
+    <title>About XKOOZA - Egyptian Urban Streetwear with Old Money Aesthetic</title>
+    <meta name="description" content="Discover the story of XKOOZA, a creative Egyptian streetwear brand founded by six friends in Cairo. Learn how our passion for urban fashion with an 'old money' aesthetic shapes Egypt's streetwear culture.">
+    <meta name="keywords" content="XKOOZA brand, Egyptian streetwear brand, old money style, Cairo fashion story, Egyptian fashion, brand history, urban fashion Egypt">
     
     <!-- Google Analytics with performance optimizations -->
     <link rel="preconnect" href="https://www.googletagmanager.com">
@@ -68,8 +68,8 @@
     <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://xkooza.netlify.app/about">
-    <meta property="og:title" content="About XKOOZA - Egyptian Urban Streetwear Brand Story">
-    <meta property="og:description" content="Discover the story of XKOOZA, a creative Egyptian streetwear brand founded by six friends in Cairo. Learn how our passion for urban fashion shapes Egypt's streetwear culture.">
+    <meta property="og:title" content="About XKOOZA - Egyptian Urban Streetwear with Old Money Aesthetic">
+    <meta property="og:description" content="Discover the story of XKOOZA, a creative Egyptian streetwear brand founded by six friends in Cairo. Learn how our 'old money' aesthetic shapes Egypt's streetwear culture.">
     <meta property="og:image" content="https://xkooza.netlify.app/assets/xkooza.png">
     <meta property="og:site_name" content="XKOOZA">
     <meta property="og:locale" content="en_US">
@@ -80,16 +80,16 @@
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://xkooza.netlify.app/about">
-    <meta name="twitter:title" content="About XKOOZA - Egyptian Urban Streetwear Brand Story">
-    <meta name="twitter:description" content="Discover the story of XKOOZA, a creative Egyptian streetwear brand founded by six friends in Cairo.">
+    <meta name="twitter:title" content="About XKOOZA - Egyptian Urban Streetwear with Old Money Aesthetic">
+    <meta name="twitter:description" content="Discover the story of XKOOZA, a creative Egyptian streetwear brand founded by six friends in Cairo with an 'old money' style approach.">
     <meta name="twitter:image" content="https://xkooza.netlify.app/assets/xkooza.png">
     <meta name="twitter:image:alt" content="XKOOZA Logo">
 
     <!-- Additional Social Meta Tags -->
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="XKOOZA Brand Story">
-    <meta name="twitter:image:alt" content="XKOOZA Brand Story">
+    <meta property="og:image:alt" content="XKOOZA Brand Story - Old Money Aesthetic">
+    <meta name="twitter:image:alt" content="XKOOZA Brand Story - Old Money Aesthetic">
 
     <!-- Facebook Specific -->
     <meta property="fb:app_id" content="your_fb_app_id">
@@ -158,7 +158,7 @@
     </nav>
 
     <div class="page-header">
-        <h1 class="main-title">XKOOZA Brand Story</h1>
+        <h1 class="main-title">Brand Story</h1>
         <div class="header-line"></div>
     </div>
 
@@ -170,6 +170,7 @@
                         <h2 class="section-title">The Birth of Urban Fashion</h2>
                         <p>We are a group of 6 friends united by diverse educational backgrounds and a shared passion for fashion. Three of us started in the American Diploma program, where the initial spark for XKOOZA was born. What began as one friend's creative vision quickly ignited the enthusiasm of others, leading to a collaborative journey in fashion design.</p>
                         <p>After careful consideration and numerous experiments, we settled on the name "XKOOZA" - a name that perfectly embodies our vision and unique approach to style. The addition of three more friends from high school completed our dynamic team, bringing fresh perspectives and diverse talents to the table.</p>
+                        <p>Our distinctive "old money" aesthetic defines our brand identity, combining timeless elegance with contemporary urban elements for a refined, luxurious style that stands apart in today's fashion landscape.</p>
                     </div>
                     <div class="about-image">
                         <img src="assets/about-1.jpg" alt="XKOOZA Team">
@@ -184,6 +185,7 @@
                         <h2 class="section-title">Our Fashion Journey</h2>
                         <p>Our breakthrough moment came when <a href="https://theolympus.org/" target="_blank" rel="noopener noreferrer" class="olympus-link">The Olympus</a> approached us to create jackets for their graduation ceremony. We seized this opportunity as the perfect launchpad for our brand, marking the official beginning of XKOOZA.</p>
                         <p>Today, we stand committed to our founding principle: creating clothing that transcends mere fashion. Each piece we produce carries its own unique story and idea, reflecting our dedication to making a meaningful impact in the fashion world.</p>
+                        <p>Our "old money" style draws inspiration from timeless elegance, quality craftsmanship, and subtle luxury. We believe in creating pieces that feel exclusive yet accessible, with meticulous attention to detail that elevates everyday urban streetwear.</p>
                     </div>
                 </div>
 
@@ -251,10 +253,78 @@
             duration: 1000,
             once: true
         });
-    </script>
-    <script>
-        // Initialize cart badge
-        document.addEventListener('DOMContentLoaded', () => {
+
+        // Counter animation
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            const duration = 2000; // 2 seconds
+            const increment = target / (duration / 16); // 60fps
+            let current = 0;
+
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    counter.textContent = Math.ceil(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = target;
+                    if (target === 100) counter.textContent = target + '%';
+                }
+            };
+
+            ScrollTrigger.create({
+                trigger: counter,
+                start: "top 80%",
+                onEnter: () => updateCounter()
+            });
+        });
+
+        // Simple typewriter effect for all paragraphs
+        document.addEventListener('DOMContentLoaded', function() {
+            const paragraphs = document.querySelectorAll('.about-text p');
+            
+            // Add a class to paragraphs for styling
+            paragraphs.forEach(p => {
+                p.classList.add('typing-text');
+                // Store original text and hide it initially
+                p.setAttribute('data-text', p.innerHTML);
+                p.innerHTML = '';
+            });
+            
+            // Type one paragraph at a time
+            function typeNextParagraph(index = 0) {
+                if (index >= paragraphs.length) return;
+                
+                const paragraph = paragraphs[index];
+                const text = paragraph.getAttribute('data-text');
+                let charIndex = 0;
+                
+                // Function to type characters
+                function typeChar() {
+                    if (charIndex < text.length) {
+                        paragraph.innerHTML = text.substring(0, charIndex + 1);
+                        charIndex++;
+                        setTimeout(typeChar, 15); // Typing speed
+                    } else {
+                        // Move to next paragraph
+                        setTimeout(() => typeNextParagraph(index + 1), 500);
+                    }
+                }
+                
+                typeChar();
+            }
+            
+            // Start typing when scrolled into view
+            ScrollTrigger.create({
+                trigger: paragraphs[0],
+                start: "top 80%",
+                onEnter: () => {
+                    typeNextParagraph();
+                }
+            });
+            
+            // Initialize cart badge
             const cartIcon = document.querySelector('.cart-icon');
             if (cartIcon) {
                 // Remove any existing badge first to avoid duplicates
@@ -280,6 +350,12 @@
             updateCartBadge();
         });
     </script>
+    <style>
+        .typing-text {
+            min-height: 1.5em; /* Minimum height to prevent layout shifts */
+            position: relative;
+        }
+    </style>
     <div class="brand-mark" id="brandMark">
         <img src="assets/logo.png" alt="XKooza Brand Mark">
     </div>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Xkooza</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>    
+    <!-- Initialize Firebase -->
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDXD3eGdW3oMd8rrF_ioGz9TXTGqp0Lzs0",
+            authDomain: "xkooza-website.firebaseapp.com",
+            projectId: "xkooza-website",
+            storageBucket: "xkooza-website.appspot.com",
+            messagingSenderId: "644306997481",
+            appId: "1:644306997481:web:68ceda781f9c7eddc0e6b3",
+            measurementId: "G-DHZH2BCGFJ"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+
+<body>
+    <div class="thank-you-container">
+        <div class="thank-you-content">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h1>Thank You for Your Order!</h1>
+            <p>Your order has been successfully placed and is being processed.</p>
+
+            <div class="order-details">
+                <h2>Order Details</h2>
+                <div id="order-summary">
+                    <div class="loading">Loading order details...</div>
+                </div>
+            </div>
+
+            <div class="next-steps">
+                <h2>Next Steps</h2>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> You will receive an order confirmation email shortly</li>
+                    <li><i class="fas fa-truck"></i> We will process your order within 24 hours</li>
+                    <li><i class="fas fa-phone"></i> Our delivery team will contact you to confirm delivery details</li>
+                </ul>
+            </div>
+
+            <div class="action-buttons">
+                <a href="last-collection.html" class="btn primary-btn">Continue Shopping</a>
+                <a href="profile.html" class="btn secondary-btn">View Order Status</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the order from Firebase
+        function displayOrderSummary() {
+            const orderSummary = document.getElementById('order-summary');
+            if (!orderSummary) return;
+            
+            // Get orderId from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId');
+            
+            console.log("Order ID from URL:", orderId);
+            
+            if (!orderId) {
+                orderSummary.innerHTML = '<p>No order ID provided.</p>';
+                return;
+            }
+            
+            // Show loading indicator
+            orderSummary.innerHTML = '<div class="loading">Loading order details...</div>';
+            
+            const db = firebase.firestore();
+            console.log("Fetching order with ID:", orderId);
+            
+            // Fetch order using the exact orderId from URL
+            db.collection('orders')
+                .where('id', '==', orderId)
+                .limit(1)
+                .get()
+                .then((snapshot) => {
+                    console.log("Query completed. Empty?", snapshot.empty);
+                    console.log("Number of docs:", snapshot.size);
+                    
+                    if (!snapshot.empty) {
+                        const orderData = snapshot.docs[0].data();
+                        console.log("Order found:", orderData);
+                        renderOrder(orderData);
+                    } else {
+                        console.log("No order found with ID:", orderId);
+                        
+                        // As a fallback, let's try to get all orders and log them
+                        db.collection('orders')
+                            .get()
+                            .then((allOrdersSnapshot) => {
+                                console.log("Total orders in database:", allOrdersSnapshot.size);
+                                allOrdersSnapshot.forEach(doc => {
+                                    console.log("Order in DB:", doc.id, " => ", doc.data().id);
+                                });
+                            })
+                            .catch(err => console.error("Error getting all orders:", err));
+                            
+                        orderSummary.innerHTML = '<p>Order details not found. Please contact customer support.</p>';
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching order:", error);
+                    orderSummary.innerHTML = '<p>Error loading order details. Please try again later.</p>';
+                });
+            
+            function renderOrder(order) {
+                // Calculate total amount from items
+                const totalAmount = order.items.reduce((total, item) => {
+                    // Remove 'L.E' and convert to number
+                    const price = parseFloat(item.price.toString().replace('L.E', '').trim());
+                    return total + (price * item.quantity);
+                }, 0);
+
+                orderSummary.innerHTML = `
+                    <div class="order-info">
+                        <p><strong>Order ID:</strong> ${order.id}</p>
+                        <p><strong>Order Date:</strong> ${order.date}</p>
+                        <p><strong>Total Amount:</strong> ${totalAmount.toFixed(2)} L.E</p>
+                        <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
+                        <p><strong>Status:</strong> ${order.status}</p>
+                        <p><strong>Shipping Address:</strong> ${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.governorate}</p>
+                    </div>
+                    <div class="order-items">
+                        <h3>Items Ordered:</h3>
+                        <ul>
+                            ${order.items.map(item => {
+                                // Remove 'L.E' and convert to number for calculations
+                                const price = parseFloat(item.price.toString().replace('L.E', '').trim());
+                                const itemTotal = price * item.quantity;
+                                return `
+                                    <li>
+                                        <img src="${item.image}" alt="${item.name}" class="order-item-image">
+                                        <div class="order-item-details">
+                                            <p><strong>${item.name}</strong> - Size: ${item.size}, ${item.color ? `Color: ${item.color},` : ''} Quantity: ${item.quantity}</p>
+                                            <p>Price: ${price.toFixed(2)} L.E</p>
+                                            <p>Total: ${itemTotal.toFixed(2)} L.E</p>
+                                        </div>
+                                    </li>
+                                `;
+                            }).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+
+        // Display order summary when page loads
+        document.addEventListener('DOMContentLoaded', displayOrderSummary);
+    </script>
+</body>
+
+</html>

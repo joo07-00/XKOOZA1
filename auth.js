@@ -233,3 +233,324 @@ auth.onAuthStateChanged((user) => {
         }
     }
 }); 
+
+// Products data
+const products = [
+    {
+        name: "XKOOZA Summer Tee",
+        price: 499.99,
+        formattedPrice: "499.99 L.E",
+        image: "assets/summer-tee-1.jpg",
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        description: "Premium cotton comfort",
+        category: "summer",
+        inStock: true
+    },
+    {
+        name: "XKOOZA Classic Hoodie",
+        price: 899.99,
+        formattedPrice: "899.99 L.E",
+        image: "assets/winter-hoodie.jpg",
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        description: "Premium winter comfort",
+        category: "winter",
+        inStock: true
+    },
+    {
+        name: "XKOOZA Street Shorts",
+        price: 599.99,
+        formattedPrice: "599.99 L.E",
+        image: "assets/summer-shorts-1.jpg",
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        description: "Comfortable urban style",
+        category: "summer",
+        inStock: true
+    },
+    {
+        name: "XKOOZA Winter Pants",
+        price: 799.99,
+        formattedPrice: "799.99 L.E",
+        image: "assets/winter-pants-1.jpg",
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        description: "Warm and durable design",
+        category: "winter",
+        inStock: true
+    }
+];
+
+// Function to add a single product to Firebase
+function addProductToFirebase(product) {
+    return db.collection("products").add(product)
+        .then((docRef) => {
+            console.log("Product added successfully with ID: ", docRef.id);
+            return docRef;
+        })
+        .catch((error) => {
+            console.error("Error adding product: ", error);
+            throw error;
+        });
+}
+
+// Function to add all products to Firebase
+function initializeProducts() {
+    const batch = db.batch();
+    
+    // First, check if products already exist
+    db.collection("products").get()
+        .then((snapshot) => {
+            if (snapshot.empty) {
+                // Collection is empty, add all products
+                return Promise.all(products.map(product => addProductToFirebase(product)));
+            } else {
+                console.log("Products collection already exists. Skipping initialization.");
+                return null;
+            }
+        })
+        .then((result) => {
+            if (result) {
+                console.log("All products added successfully");
+            }
+        })
+        .catch((error) => {
+            console.error("Error initializing products: ", error);
+        });
+}
+
+// Function to get all products from Firebase
+function getAllProducts() {
+    return db.collection("products").get()
+        .then((snapshot) => {
+            return snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        })
+        .catch((error) => {
+            console.error("Error getting products: ", error);
+            throw error;
+        });
+}
+
+// Function to get products by category
+function getProductsByCategory(category) {
+    return db.collection("products")
+        .where("category", "==", category)
+        .get()
+        .then((snapshot) => {
+            return snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        })
+        .catch((error) => {
+            console.error("Error getting products by category: ", error);
+            throw error;
+        });
+}
+
+// Initialize products when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    initializeProducts();
+});
+
+// Function to save order to Firebase
+function saveOrderToFirebase(orderData) {
+    const user = auth.currentUser;
+    
+    if (!user) {
+        console.log('User not logged in, order only saved to localStorage');
+        return;
+    }
+    
+    // Add user ID to order data
+    orderData.userId = user.uid;
+    console.log('Saving order to Firebase:', orderData);
+
+    // Add order to Firestore
+    db.collection('orders').add(orderData)
+        .then((docRef) => {
+            console.log('Order saved to Firebase with ID:', docRef.id);
+        })
+        .catch((error) => {
+            console.error('Error adding order to Firebase:', error);
+        });
+}
+
+// Function to get user orders from Firebase
+function getUserOrdersFromFirebase() {
+    const user = auth.currentUser;
+    
+    if (!user) {
+        console.log('User not logged in, returning localStorage orders only');
+        return Promise.resolve([]);
+    }
+    
+    return db.collection('orders')
+        .where('userId', '==', user.uid)
+        .orderBy('date', 'desc')
+        .get()
+        .then((querySnapshot) => {
+            const orders = [];
+            querySnapshot.forEach((doc) => {
+                const orderData = doc.data();
+                orderData.firebaseId = doc.id; // Store Firestore document ID
+                orders.push(orderData);
+            });
+            return orders;
+        })
+        .catch((error) => {
+            console.error('Error getting orders from Firebase:', error);
+            return [];
+        });
+}
+
+// Function to merge orders from Firebase and localStorage
+function getMergedOrders() {
+    // Get orders from localStorage
+    const localOrders = JSON.parse(localStorage.getItem('orders')) || [];
+    
+    // Get orders from Firebase
+    return getUserOrdersFromFirebase()
+        .then(firebaseOrders => {
+            // Create a map of order IDs to check for duplicates
+            const orderMap = new Map();
+            
+            // Add Firebase orders to the map
+            firebaseOrders.forEach(order => {
+                orderMap.set(order.id, order);
+            });
+            
+            // Add localStorage orders if they don't already exist in Firebase
+            localOrders.forEach(order => {
+                if (!orderMap.has(order.id)) {
+                    orderMap.set(order.id, order);
+                    
+                    // Save this local order to Firebase
+                    saveOrderToFirebase(order);
+                }
+            });
+            
+            // Convert map values to array and sort by date (newest first)
+            const mergedOrders = Array.from(orderMap.values());
+            mergedOrders.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateB - dateA;
+            });
+            
+            return mergedOrders;
+        });
+}
+
+// Function to generate unique order ID
+function generateOrderId() {
+    // Get existing orders to determine the next number
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    
+    // Get the last order number or start from 0
+    const lastOrder = orders[orders.length - 1];
+    let lastNumber = 0;
+    
+    if (lastOrder && lastOrder.id) {
+        // Extract number from last order ID (XK-001 -> 1)
+        const lastNumberStr = lastOrder.id.split('-')[1];
+        lastNumber = parseInt(lastNumberStr);
+    }
+    
+    // Generate next number with padding
+    const nextNumber = (lastNumber + 1).toString().padStart(3, '0');
+    
+    // Return new order ID
+    return `XK-${nextNumber}`;
+}
+
+// Function to store order in localStorage only (fallback)
+function storeOrder(orderData) {
+    // Get existing orders
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    
+    // Get current date and time in Cairo timezone
+    const cairoDate = new Date().toLocaleString('en-US', {
+        timeZone: 'Africa/Cairo',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    });
+    
+    // Create new order object with all required information
+    const newOrder = {
+        id: generateOrderId(),
+        date: cairoDate,
+        items: orderData.items,
+        shippingInfo: orderData.shippingInfo,
+        paymentMethod: orderData.paymentMethod,
+        status: 'Pending',
+        totalAmount: orderData.items.reduce((total, item) => {
+            const price = parseFloat(item.price.toString().replace('L.E', '').trim());
+            return total + (price * item.quantity);
+        }, 0)
+    };
+    
+    // Add new order to orders array
+    orders.push(newOrder);
+    
+    // Update localStorage
+    localStorage.setItem('orders', JSON.stringify(orders));
+    
+    // Clear cart after successful order
+    localStorage.removeItem('cart');
+    if (typeof updateCartBadge === 'function') {
+        updateCartBadge();
+    }
+    
+    return newOrder;
+}
+
+// Modify storeOrder function to save to both localStorage and Firebase
+function storeOrderWithSync(orderData) {
+    // Get existing orders from localStorage
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    
+    // Get current date and time in Cairo timezone
+    const cairoDate = new Date().toLocaleString('en-US', {
+        timeZone: 'Africa/Cairo',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    });
+    
+    // Create new order object with all required information
+    const newOrder = {
+        id: generateOrderId(),
+        date: cairoDate,
+        items: orderData.items,
+        shippingInfo: orderData.shippingInfo,
+        paymentMethod: orderData.paymentMethod,
+        status: 'Pending',
+        totalAmount: orderData.items.reduce((total, item) => {
+            const price = parseFloat(item.price.toString().replace('L.E', '').trim());
+            return total + (price * item.quantity);
+        }, 0)
+    };
+    
+    // Add new order to orders array in localStorage
+    orders.push(newOrder);
+    localStorage.setItem('orders', JSON.stringify(orders));
+    
+    // Also save to Firebase
+    saveOrderToFirebase(newOrder);
+    
+    // Clear cart after successful order
+    localStorage.removeItem('cart');
+    updateCartBadge();
+    
+    return newOrder;
+}

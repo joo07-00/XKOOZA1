@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XKOOZA Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="assets/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .admin-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+            padding: 32px 24px;
+        }
+
+        .admin-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 24px;
+            color: #222;
+            text-align: center;
+        }
+
+        .admin-section {
+            margin-bottom: 32px;
+        }
+
+        .admin-section h2 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: #333;
+        }
+
+        .admin-btn {
+            background: #222;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .admin-btn:hover {
+            background: #444;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            border: 1px solid #eee;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        .admin-table th {
+            background: #f7f7f7;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .login-form {
+            max-width: 350px;
+            margin: 60px auto;
+            background: #fafafa;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+            padding: 28px 22px;
+        }
+
+        .login-form input {
+            width: 100%;
+            margin-bottom: 14px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .login-form button {
+            width: 100%;
+        }
+
+        .logout-btn {
+            float: right;
+            background: #c00;
+            margin-top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html"><img src="assets/logo.png" alt="XKOOZA Logo" style="height:40px;"></a>
+            <span style="font-weight:bold; font-size:1.3rem; margin-left:10px;">Admin Panel</span>
+            <button id="logoutBtn" class="admin-btn logout-btn hidden">Logout</button>
+        </nav>
+    </header>
+    <main>
+        <form id="loginForm" class="login-form">
+            <h2>Admin Login</h2>
+            <input type="email" id="adminEmail" placeholder="Admin Email" required>
+            <input type="password" id="adminPassword" placeholder="Password" required>
+            <button type="submit" class="admin-btn">Login</button>
+            <div id="loginError" style="color:#c00; margin-top:10px;"></div>
+        </form>
+        <div class="admin-container hidden" id="adminPanel">
+            <div class="admin-title">XKOOZA Admin Panel</div>
+            <div class="admin-section" id="products-section">
+                <h2>Manage Products</h2>
+                <button class="admin-btn" onclick="showAddProductModal()">Add Product</button>
+                <div id="products-list"></div>
+            </div>
+            <div class="admin-section" id="orders-section">
+                <h2>Manage Orders</h2>
+                <div id="orders-list"></div>
+            </div>
+        </div>
+        <!-- Add Product Modal (hidden by default) -->
+        <div id="addProductModal" class="hidden"
+            style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;z-index:1000;">
+            <div style="background:#fff;padding:24px 18px;border-radius:8px;min-width:320px;max-width:90vw;">
+                <h3>Add Product</h3>
+                <form id="addProductForm">
+                    <input type="text" id="productName" placeholder="Product Name" required><br>
+                    <input type="number" id="productPrice" placeholder="Price" required><br>
+                    <input type="text" id="productCategory" placeholder="Category" required><br>
+                    <input type="text" id="productSizes" placeholder="Sizes (comma separated)" required><br>
+                    <input type="text" id="productImage" placeholder="Image URL" required><br>
+                    <textarea id="productDescription" placeholder="Description" required></textarea><br>
+                    <button type="submit" class="admin-btn">Add</button>
+                    <button type="button" class="admin-btn" onclick="closeAddProductModal()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        // === CONFIG ===
+        const ADMIN_EMAIL = "admin@email.com"; // CHANGE THIS TO YOUR ADMIN EMAIL
+
+        // === AUTH & LOGIN ===
+        const loginForm = document.getElementById('loginForm');
+        const adminPanel = document.getElementById('adminPanel');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loginError = document.getElementById('loginError');
+
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user && user.email === ADMIN_EMAIL) {
+                loginForm.classList.add('hidden');
+                adminPanel.classList.remove('hidden');
+                logoutBtn.classList.remove('hidden');
+                loadProducts();
+                loadOrders();
+            } else {
+                firebase.auth().signOut();
+                loginForm.classList.remove('hidden');
+                adminPanel.classList.add('hidden');
+                logoutBtn.classList.add('hidden');
+            }
+        });
+
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    if (userCredential.user.email !== ADMIN_EMAIL) {
+                        firebase.auth().signOut();
+                        loginError.textContent = "Access denied: Not admin email.";
+                    } else {
+                        loginError.textContent = "";
+                    }
+                })
+                .catch((error) => {
+                    loginError.textContent = error.message;
+                });
+        });
+        logoutBtn.addEventListener('click', function () {
+            firebase.auth().signOut();
+        });
+
+        // === PRODUCT MANAGEMENT ===
+        function loadProducts() {
+            const productsList = document.getElementById('products-list');
+            productsList.innerHTML = '<div>Loading...</div>';
+            firebase.firestore().collection('products').get().then(snapshot => {
+                let html = '<table class="admin-table"><tr><th>Name</th><th>Price</th><th>Category</th><th>Sizes</th><th>Actions</th></tr>';
+                snapshot.forEach(doc => {
+                    const p = doc.data();
+                    html += `<tr><td>${p.name}</td><td>${p.price}</td><td>${p.category}</td><td>${(p.sizes || []).join(', ')}</td><td><button onclick="deleteProduct('${doc.id}')">Delete</button></td></tr>`;
+                });
+                html += '</table>';
+                productsList.innerHTML = html;
+            });
+        }
+        function deleteProduct(id) {
+            if (confirm('Delete this product?')) {
+                firebase.firestore().collection('products').doc(id).delete().then(loadProducts);
+            }
+        }
+        function showAddProductModal() {
+            document.getElementById('addProductModal').classList.remove('hidden');
+        }
+        function closeAddProductModal() {
+            document.getElementById('addProductModal').classList.add('hidden');
+        }
+        document.getElementById('addProductForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('productName').value;
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const category = document.getElementById('productCategory').value;
+            const sizes = document.getElementById('productSizes').value.split(',').map(s => s.trim());
+            const image = document.getElementById('productImage').value;
+            const description = document.getElementById('productDescription').value;
+            firebase.firestore().collection('products').add({ name, price, category, sizes, image, description, inStock: true }).then(() => {
+                closeAddProductModal();
+                loadProducts();
+            });
+        });
+
+        // === ORDER MANAGEMENT ===
+        function loadOrders() {
+            const ordersList = document.getElementById('orders-list');
+            ordersList.innerHTML = '<div>Loading...</div>';
+            firebase.firestore().collection('orders').get().then(snapshot => {
+                let html = '<table class="admin-table"><tr><th>Order ID</th><th>User</th><th>Total</th><th>Date</th></tr>';
+                snapshot.forEach(doc => {
+                    const o = doc.data();
+                    html += `<tr><td>${doc.id}</td><td>${o.userEmail || '-'}</td><td>${o.total || '-'}</td><td>${o.date || '-'}</td></tr>`;
+                });
+                html += '</table>';
+                ordersList.innerHTML = html;
+            });
+        }
+    </script>
+</body>
+
+</html>

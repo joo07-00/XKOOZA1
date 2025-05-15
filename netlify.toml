@@ -18,6 +18,6 @@
   pretty_urls = true
 
 [forms]
-  [forms."checkout-form"]
+  [forms."payment-form"]
     fields = { name = "string", email = "email", phone = "string", governorate = "string", address = "string", "payment-method" = "string", "cart-items" = "string", "total-amount" = "string" }
     file = { "payment-screenshot" = "image/*" } 

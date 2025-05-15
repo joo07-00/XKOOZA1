@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XKOOZA Latest Collection - New Egyptian Urban Streetwear</title>
-    <meta name="description" content="Discover XKOOZA's newest streetwear designs. Fresh styles, innovative designs, and premium quality urban fashion made in Egypt. Shop our latest collection now.">
-    <meta name="keywords" content="XKOOZA latest, new Egyptian fashion, urban streetwear, latest collection">
+    <title>XKOOZA Latest Collection - Old Money Premium Streetwear</title>
+    <meta name="description" content="Discover XKOOZA's newest old money streetwear designs. Timeless styles, elegant designs, and premium quality urban fashion with classic sophistication made in Egypt. Shop our latest collection now.">
+    <meta name="keywords" content="XKOOZA latest, old money style, new Egyptian fashion, urban streetwear, latest collection, timeless elegance">
     <link rel="canonical" href="https://xkooza.netlify.app/last-collection" />
 
     <!-- Google Analytics with performance optimizations -->
@@ -43,7 +43,7 @@
         "@context": "https://schema.org",
         "@type": "CollectionPage",
         "name": "XKOOZA Latest Collection",
-        "description": "Discover our newest streetwear designs and latest urban fashion",
+        "description": "Discover our newest old money streetwear designs and latest timeless urban fashion",
         "url": "https://xkooza.netlify.app/last-collection",
         "isPartOf": {
             "@type": "WebSite",
@@ -52,13 +52,13 @@
         },
         "about": {
             "@type": "Product",
-            "name": "Latest Streetwear Collection",
-            "description": "Fresh styles, innovative designs, and premium quality for the fashion-forward",
+            "name": "Latest Old Money Streetwear Collection",
+            "description": "Timeless styles, elegant designs, and premium quality for the fashion-forward",
             "brand": {
                 "@type": "Brand",
                 "name": "XKOOZA"
             },
-            "category": "Latest Streetwear",
+            "category": "Latest Old Money Streetwear",
             "offers": {
                 "@type": "AggregateOffer",
                 "availability": "https://schema.org/InStock",
@@ -71,8 +71,8 @@
     <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://xkooza.netlify.app/last-collection">
-    <meta property="og:title" content="XKOOZA Latest Collection - Egyptian Urban Streetwear">
-    <meta property="og:description" content="Discover XKOOZA's newest streetwear designs. Fresh styles, innovative designs, and premium quality urban fashion made in Egypt.">
+    <meta property="og:title" content="XKOOZA Latest Collection - Old Money Egyptian Urban Streetwear">
+    <meta property="og:description" content="Discover XKOOZA's newest old money streetwear designs. Timeless styles, elegant designs, and premium quality urban fashion with classic sophistication made in Egypt.">
     <meta property="og:image" content="https://xkooza.netlify.app/assets/xkooza.png">
     <meta property="og:site_name" content="XKOOZA">
     <meta property="og:locale" content="en_US">
@@ -83,16 +83,16 @@
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://xkooza.netlify.app/last-collection">
-    <meta name="twitter:title" content="XKOOZA Latest Collection - Egyptian Urban Streetwear">
-    <meta name="twitter:description" content="Shop XKOOZA's newest streetwear collection. Premium quality urban fashion made in Egypt.">
+    <meta name="twitter:title" content="XKOOZA Latest Collection - Old Money Egyptian Urban Streetwear">
+    <meta name="twitter:description" content="Shop XKOOZA's newest old money streetwear collection. Premium quality timeless urban fashion made in Egypt.">
     <meta name="twitter:image" content="https://xkooza.netlify.app/assets/xkooza.png">
     <meta name="twitter:image:alt" content="XKOOZA Logo">
     
     <!-- Additional Social Meta Tags -->
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="XKOOZA Latest Streetwear Collection">
-    <meta name="twitter:image:alt" content="XKOOZA Latest Streetwear Collection">
+    <meta property="og:image:alt" content="XKOOZA Latest Old Money Streetwear Collection">
+    <meta name="twitter:image:alt" content="XKOOZA Latest Old Money Streetwear Collection">
     
     <!-- Facebook Specific -->
     <meta property="fb:app_id" content="your_fb_app_id">
@@ -166,7 +166,7 @@
     <!-- Collection Header -->
     <header class="collection-header">
         <h1 data-aos="fade-down">Latest Collection</h1>
-        <p data-aos="fade-up">Our newest arrivals and latest designs</p>
+        <p data-aos="fade-up">Our newest arrivals featuring timeless old money elegance</p>
     </header>
 
     <!-- Featured Products Section -->
@@ -176,90 +176,119 @@
             <div class="products-grid">
                 <!-- Latest Summer Products -->
                 <div class="product-card" data-aos="fade-up">
-                    <div class="product-image">
-                        <img src="assets/summer-tee-1.jpg" alt="XKOOZA Summer Tee">
-                        <div class="product-overlay">
-                            <span class="price">499.99 L.E</span>
+                    <div class="product-image ">
+                        <div class="image-slider">
+                            <img src="assets/490537620_555578384243856_1754841840435606688_n.jpg" data-color="navy"
+                                alt="pants">
+                            <img src="assets/490461996_577926594679800_369621001125142537_n.jpg" data-color="black"
+                                alt="pants" class="active">
+                            <img src="assets/491026338_660667320164848_3391660373987415927_n.jpg" data-color="offwhite"
+                                alt="pants">
+                            <img src="assets/491009247_4132416960326753_7563501246693434081_n.jpg" data-color="offwhite"
+                                alt="pants">
                         </div>
+                        <div class="product-overlay">
+                            <span class="price">549.99 L.E</span>
+                        </div>
+                        <button class="prev" onclick="changeImage(this, -1)">&#10094;</button>
+                        <button class="next" onclick="changeImage(this, 1)">&#10095;</button>
                     </div>
-                    <h3>XKOOZA Summer Tee</h3>
-                    <p>Premium cotton comfort</p>
+                    <h3>XKOOZA-Classic Wide</h3>
+                    <div class="open-view">
+                        <button class="quick-view-btn" onclick="openQuickView(this)">Quick View</button>
+                        <button class="size-chart-btn" onclick="showSizeChart(this)">Size Chart</button> 
+                    </div>
+                    <img src="assets/size.png" alt="Size Chart" class="size-chart-image" style="display: none;">
+
+                    <!-- Color Selection -->
+                    <div class="color-selector">
+                        <button class="color-square active" data-color="black">Black</button>
+                        <button class="color-square" data-color="navy">Navy</button>
+                        <button class="color-square" data-color="offwhite">Off White</button>
+                    </div>
+
+                    <!-- Size Selection -->
                     <div class="size-selector">
                         <div class="size-squares">
-                            <button class="size-square" data-size="S">S</button>
-                            <button class="size-square" data-size="M">M</button>
-                            <button class="size-square" data-size="L">L</button>
-                            <button class="size-square" data-size="XL">XL</button>
-                            <button class="size-square" data-size="2XL">2XL</button>
+                            <button class="size-square" data-size="M" onclick="selectSize(this)">M</button>
+                            <button class="size-square" data-size="L" onclick="selectSize(this)">L</button>
+                            <button class="size-square" data-size="XL" onclick="selectSize(this)">XL</button>
+                            <button class="size-square" data-size="2XL" onclick="selectSize(this)">2XL</button>
                         </div>
                     </div>
+
+                    <!-- Quantity Input with + / - -->
+                    <div class="quantity-selector">
+                        <div class="quantity-controls">
+                            <button type="button" onclick="changeQuantity(this, -1)">-</button>
+                            <input type="number" min="1" value="1" class="quantity-input" readonly>
+                            <button type="button" onclick="changeQuantity(this, 1)">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Add to Cart Button -->
                     <button class="add-to-cart-btn" onclick="addToCart(this)">Add to Cart</button>
+                    <button class="paynw-btn" onclick="payNow(this)">Pay it now</button>
                 </div>
 
                 <!-- Latest Winter Products -->
                 <div class="product-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="product-image">
-                        <img src="assets/winter-hoodie.jpg" alt="XKOOZA Classic Hoodie">
+                      <div class="image-slider">
+                        <img src="assets\shortwit.jpg" data-color="white" class="active"  alt="shorts">
+                        <img src="assets\white2.jpg" data-color="white" alt="shorts">
+                        <img src="assets\white.jpg" data-color="white" alt="shorts">
+                        <img src="assets\black.jpg" data-color="black" alt="shorts">
+                        <img src="assets\black2.jpg" data-color="black" alt="shorts">
+                        <img src="assets\black1.jpg" data-color="black" alt="shorts">
+                        <img src="assets\grey.jpg" data-color="grey" alt="shorts">
+                        <img src="assets\grey1.jpg" data-color="grey" alt="shorts">
+                        <img src="assets\grey2.jpg" data-color="grey" alt="shorts">
+                      </div>
                         <div class="product-overlay">
-                            <span class="price">899.99 L.E</span>
+                            <span class="price">249.99 L.E</span>
                         </div>
+                        <button class="prev" onclick="changeImage(this, -1)">&#10094;</button>
+                        <button class="next" onclick="changeImage(this, 1)">&#10095;</button>
                     </div>
-                    <h3>XKOOZA Classic Hoodie</h3>
-                    <p>Premium winter comfort</p>
-                    <div class="size-selector">
-                        <div class="size-squares">
-                            <button class="size-square" data-size="S">S</button>
-                            <button class="size-square" data-size="M">M</button>
-                            <button class="size-square" data-size="L">L</button>
-                            <button class="size-square" data-size="XL">XL</button>
-                            <button class="size-square" data-size="2XL">2XL</button>
-                        </div>
+                    <h3>UrbanFlex Shorts</h3>
+                    <div class="open-view">
+                        <button class="quick-view-btn" onclick="openQuickView(this)">Quick View</button>
+                        <button class="size-chart-btn" onclick="showSizeChart(this)">Size Chart</button> 
                     </div>
-                    <button class="add-to-cart-btn" onclick="addToCart(this)">Add to Cart</button>
-                </div>
+                    <img src="assets\shorts size.png" alt="Size Chart" class="size-chart-image" style="display: none;">
 
-                <!-- Latest Summer Shorts -->
-                <div class="product-card" data-aos="fade-up">
-                    <div class="product-image">
-                        <img src="assets/summer-shorts-1.jpg" alt="Summer Shorts 1">
-                        <div class="product-overlay">
-                            <span class="price">599.99 L.E</span>
-                        </div>
+                    
+                    <!-- Color Selection -->
+                    <div class="color-selector">
+                        <button class="color-square active" data-color="white">White</button>
+                        <button class="color-square" data-color="grey">Grey</button>
+                        <button class="color-square" data-color="black">Black</button>
                     </div>
-                    <h3>XKOOZA Street Shorts</h3>
-                    <p>Comfortable urban style</p>
-                    <div class="size-selector">
-                        <div class="size-squares">
-                            <button class="size-square" data-size="S">S</button>
-                            <button class="size-square" data-size="M">M</button>
-                            <button class="size-square" data-size="L">L</button>
-                            <button class="size-square" data-size="XL">XL</button>
-                            <button class="size-square" data-size="2XL">2XL</button>
-                        </div>
-                    </div>
-                    <button class="add-to-cart-btn" onclick="addToCart(this)">Add to Cart</button>
-                </div>
 
-                <!-- Latest Winter Pants -->
-                <div class="product-card" data-aos="fade-up">
-                    <div class="product-image">
-                        <img src="assets/winter-pants-1.jpg" alt="Winter Pants 1">
-                        <div class="product-overlay">
-                            <span class="price">799.99 L.E</span>
-                        </div>
-                    </div>
-                    <h3>XKOOZA Winter Pants</h3>
-                    <p>Warm and durable design</p>
+                    <!-- Size Selection -->
                     <div class="size-selector">
                         <div class="size-squares">
-                            <button class="size-square" data-size="S">S</button>
-                            <button class="size-square" data-size="M">M</button>
-                            <button class="size-square" data-size="L">L</button>
-                            <button class="size-square" data-size="XL">XL</button>
-                            <button class="size-square" data-size="2XL">2XL</button>
+                            <button class="size-square" data-size="S" onclick="selectSize(this)">S</button>
+                            <button class="size-square" data-size="M" onclick="selectSize(this)">M</button>
+                            <button class="size-square" data-size="L" onclick="selectSize(this)">L</button>
+                            <button class="size-square" data-size="XL" onclick="selectSize(this)">XL</button>
+                            <button class="size-square" data-size="2XL" onclick="selectSize(this)">2XL</button>
                         </div>
                     </div>
+
+                    <!-- Quantity Input with + / - -->
+                    <div class="quantity-selector">
+                        <div class="quantity-controls">
+                            <button type="button" onclick="changeQuantity(this, -1)">-</button>
+                            <input type="number" min="1" value="1" class="quantity-input" readonly>
+                            <button type="button" onclick="changeQuantity(this, 1)">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Add to Cart Button -->
                     <button class="add-to-cart-btn" onclick="addToCart(this)">Add to Cart</button>
+                    <button class="paynw-btn" onclick="payNow(this)">Pay it now</button>
                 </div>
             </div>
         </div>
@@ -347,16 +376,22 @@
         // Latest Collection Products
         const latestCollectionProducts = [
             {
-                name: "XKOOZA Summer Tee",
-                price: "499.99 L.E",
-                image: "assets/summer-tee-1.jpg",
-                description: "Premium cotton comfort"
+                name: "XKOOZA-Classic Wide",
+                price: "549.99",
+                image: "assets/490461996_577926594679800_369621001125142537_n.jpg",
+                description: "Chill wide fit with smooth flow"
             },
             {
                 name: "XKOOZA Classic Hoodie",
-                price: "899.99 L.E",
+                price: "899.99",
                 image: "assets/winter-hoodie.jpg",
                 description: "Premium winter comfort"
+            },
+            {
+                name: "XKOOZA Street Shorts",
+                price: "449.99",
+                image: "assets/shorts.jpg",
+                description: "Urban comfort for hot days"
             }
         ];
 
@@ -429,6 +464,15 @@
             // Update the badge
             updateCartBadge();
         });
+    </script>
+    <script>
+        function changeQuantity(button, delta) {
+          const quantityInput = button.parentElement.querySelector('.quantity-input');
+          let current = parseInt(quantityInput.value);
+          current += delta;
+          if (current < 1) current = 1;
+          quantityInput.value = current;
+        }
     </script>
     <div class="brand-mark" id="brandMark">
         <img src="assets/logo.png" alt="XKooza Brand Mark">

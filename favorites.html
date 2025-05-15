@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XKOOZA Favorites</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+      <!-- Google Analytics with performance optimizations -->
+      <link rel="preconnect" href="https://www.googletagmanager.com">
+      <link rel="preconnect" href="https://www.google-analytics.com">
+      
+      <!-- Google tag (gtag.js) with async -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZHPB9RD6D"></script>
+      
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        // Configure analytics with additional settings
+        gtag('config', 'G-QZHPB9RD6D', {
+            'anonymize_ip': true,
+            'page_title': document.title,
+            'page_path': window.location.pathname,
+            'send_page_view': true
+        });
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <button class="hamburger">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <a href="index.html" class="nav-logo">XKOOZA</a>
+        <div class="nav-center-links">
+            <a href="index.html">Home</a>
+            <a href="collections.html">Collections</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        
+        <div class="mobile-nav-links">
+            <a href="index.html">Home</a>
+            <div class="mobile-menu-item">
+                <a href="collections.html">Collections</a>
+                <div class="sub-menu">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+
+            <div class="mobile-social-links">
+                <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-tiktok"></i> TikTok
+                </a>
+                <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook"></i> Facebook
+                </a>
+            </div>
+        </div>
+        <div class="cart-icon-container">
+            <a href="checkout.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-badge"></span>
+            </a>
+            <a href="signin.html" class="user-icon">
+                <i class="fas fa-user"></i>
+                <div class="user-dropdown">
+                    <a href="signin.html">Sign In</a>
+                    <a href="signup.html">Sign Up</a>
+                </div>
+            </a>
+            <a href="favorites.html" class="favorites-icon">
+                <i class="fas fa-heart"></i>
+            </a>
+        </div>
+    </nav>
+
+
+    <!-- Favorites Section -->
+    <section class="favorites-section">
+        <div class="favorites-container">
+            <h1 class="main-title" data-aos="fade-up">My Favorites</h1>
+            <div class="favorites-grid" id="favorites-grid" data-aos="fade-up" data-aos-delay="200">
+                <!-- Products will be loaded here dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="xkooza-logo">
+                <img src="assets/logo.png" alt="XKooza Logo">
+            </div>
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="collections.html">Collections</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="terms.html">Terms & Conditions</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Collections</h3>
+                <div class="footer-links">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 XKOOZA. All rights reserved.</p>
+        </div>
+    </footer>
+    <div class="brand-mark" id="brandMark">
+        <img src="assets/logo.png" alt="XKooza Brand Mark">
+    </div>
+
+    <div class="social-menu" id="socialMenu">
+        <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="instagram" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="tiktok" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.facebook.com/share/19wx7EieiN/" class="facebook" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-facebook"></i>
+        </a>
+    </div>
+      <!-- Terms and Conditions Popup -->
+      <div class="terms-popup" id="termsPopup">
+        <div class="terms-content">
+            <div class="terms-text">
+                <p>By using this website, you agree to our Terms of Service and Privacy Policy.</p>
+            </div>
+            <div class="terms-buttons">
+                <button id="acceptTerms" class="accept-btn">Accept</button>
+                <button id="declineTerms" class="decline-btn">Decline</button>
+            </div>
+            <div class="terms-link">
+                <a href="terms.html" target="_blank">Read our Terms & Conditions</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize cart badge
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartIcon = document.querySelector('.cart-icon');
+            if (cartIcon) {
+                // Remove any existing badge first to avoid duplicates
+                const existingBadge = cartIcon.querySelector('.cart-badge');
+                if (existingBadge) {
+                    existingBadge.remove();
+                }
+
+                // Create and append the badge
+                const badge = document.createElement('span');
+                badge.className = 'cart-badge';
+                cartIcon.appendChild(badge);
+
+                // Add shopping cart icon if it doesn't exist
+                if (!cartIcon.querySelector('.fas.fa-shopping-cart')) {
+                    const cartIconElement = document.createElement('i');
+                    cartIconElement.className = 'fas fa-shopping-cart';
+                    cartIcon.insertBefore(cartIconElement, badge);
+                }
+            }
+            
+            // Update the badge
+            updateCartBadge();
+        });
+    </script>
+      <!-- Firebase SDKs -->
+      <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+      <!-- Custom Scripts -->
+      <script src="auth.js"></script>
+      <script src="script.js"></script>
+</body>
+</html> 
