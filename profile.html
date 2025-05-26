@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - XKOOZA</title>
-    
+
     <!-- External Libraries -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
@@ -16,60 +19,71 @@
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-   <!-- Navbar -->
-   <nav class="navbar">
-    <button class="hamburger">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-    </button>
-    <a href="index.html" class="nav-logo">XKOOZA</a>
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="collections.html">Collections</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-    </div>
-    <div class="mobile-nav-links">
-        <a href="index.html" class="active">Home</a>
-        <div class="mobile-menu-item">
-            <a href="collections.html">Collections</a>
-            <div class="sub-menu">
-                <a href="last-collection.html">Latest Collection</a>
-                <a href="summer.html">Summer Collection</a>
-                <a href="winter.html">Winter Collection</a>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <button class="hamburger">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <a href="index.html" class="nav-logo">XKOOZA</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <div class="dropdown">
+                <a href="collections.html" class="dropbtn">Collections</a>
+                <div class="dropdown-content">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="mobile-nav-links">
+            <a href="index.html"">Home</a>
+            <div class="mobile-menu-item">
+                <a href="collections.html">Collections</a>
+                <div class="sub-menu">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <div class="mobile-social-links">
+                <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon" target="_blank"
+                    rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon" target="_blank"
+                    rel="noopener noreferrer">
+                    <i class="fab fa-tiktok"></i> TikTok
+                </a>
+                <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon" target="_blank"
+                    rel="noopener noreferrer">
+                    <i class="fab fa-facebook"></i> Facebook
+                </a>
             </div>
         </div>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <div class="mobile-social-links">
-            <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-instagram"></i> Instagram
+
+        <div class="cart-icon-container">
+            <a href="checkout.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-badge"></span>
             </a>
-            <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-tiktok"></i> TikTok
-            </a>
-            <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-facebook"></i> Facebook
+            <a href="signin.html" class="user-icon">
+                <i class="fas fa-user"></i>
+                <div class="user-dropdown">
+                    <a href="signin.html">Sign In</a>
+                    <a href="signup.html">Sign Up</a>
+                </div>
             </a>
         </div>
-    </div>
-   
-    <div class="cart-icon-container">
-        <a href="checkout.html" class="cart-icon">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-badge"></span>
-        </a>
-        <a href="signin.html" class="user-icon">
-            <i class="fas fa-user"></i>
-            <div class="user-dropdown">
-                <a href="signin.html">Sign In</a>
-                <a href="signup.html">Sign Up</a>
-            </div>
-        </a>
-    </div>
-</nav>
+    </nav>
 
     <!-- Profile Section -->
     <section class="profile-section">
@@ -151,9 +165,12 @@
             <div class="footer-section">
                 <h3>Connect With Us</h3>
                 <div class="social-links">
-                    <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon"><i
+                            class="fab fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon"><i
+                            class="fab fa-facebook"></i></a>
                 </div>
             </div>
         </div>
@@ -196,7 +213,7 @@
                     cartIcon.insertBefore(cartIconElement, badge);
                 }
             }
-            
+
             // Update the badge
             updateCartBadge();
         });
@@ -244,5 +261,13 @@
     <!-- Custom Scripts -->
     <script src="auth.js"></script>
     <script src="script.js"></script>
+    <!-- Popup Order Summary -->
+    <div id="orderSummaryPopup" class="order-summary-popup" style="display:none;">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closeOrderSummaryPopup()">&times;</button>
+            <div id="orderSummaryContent"></div>
+        </div>
+    </div>
 </body>
-</html> 
+
+</html>

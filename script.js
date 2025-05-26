@@ -1,7 +1,6 @@
-// Create product cards - Global function
 const createProductCard = (product) => {
     return `
-        <div class="product-card" data-aos="fade-up">
+        <div class="product-card" data-aos="fade-up" data-product-id="${product.id}">
             <div class="product-image">
                 <div class="image-loader">
                     <div class="spinner"></div>
@@ -11,6 +10,9 @@ const createProductCard = (product) => {
                      class="product-img"
                      onload="this.parentElement.classList.add('loaded')"
                      onerror="this.src='assets/placeholder.jpg'; this.parentElement.classList.add('loaded')">
+                <span class="favorite-icon" data-product-id="${product.id}">
+                    <i class="far fa-heart"></i>
+                </span>
             </div>
             <div class="product-info">
                 <h3>${product.name}</h3>
@@ -231,7 +233,6 @@ document.querySelectorAll('.social-icon').forEach(icon => {
 // Shopping Cart Functionality
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-
 // Add to Cart Function with improved image handling and color-image sync
 function addToCart(button) {
     const productCard = button.closest('.product-card');
@@ -324,7 +325,6 @@ function addToCart(button) {
     }
 }
 
-
 // Check for successful form submission when returning from thank you page
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize cart badge
@@ -394,7 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-
 
 // Update Cart Badge
 function updateCartBadge() {
@@ -574,45 +573,6 @@ function displayCartItems() {
     totalElement.textContent = `${total.toFixed(2)} L.E`;
 }
 
-// Contact Form Submission
-if (document.querySelector('.contact-section')) {
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            // Get form data for logging
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                message: document.getElementById('message').value
-            };
-
-            // Log contact form data for development
-            console.log('Contact Form Submission:', formData);
-        });
-    }
-}
-
-// Newsletter Subscription
-document.addEventListener('DOMContentLoaded', () => {
-    const newsletterForm = document.querySelector('.newsletter-form');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', (e) => {
-            const emailInput = newsletterForm.querySelector('input[type="email"]');
-            const email = emailInput.value.trim();
-
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!email || !emailRegex.test(email)) {
-                e.preventDefault();
-                showToast('Please enter a valid email address', 'error');
-                return;
-            }
-
-            // Log newsletter subscription for development
-            console.log('Newsletter Subscription:', { email });
-        });
-    }
-});
 
 // Counter Animation
 function startCounterAnimation() {
@@ -1013,33 +973,36 @@ function generateCustomOrderId() {
 // Helper function to render the orders list
 function renderOrdersList(orders, ordersList) {
     ordersList.innerHTML = orders.map(order => {
-        // Calculate total amount from items
         const totalAmount = order.items.reduce((total, item) => {
-            // Remove 'L.E' and convert to number
             const price = parseFloat(item.price.toString().replace('L.E', '').trim());
             return total + (price * item.quantity);
         }, 0);
-
-        // Always use orderData.id if present, fallback to doc.id if missing
         const orderId = order.id || order.docId;
-
         return `
             <div class="order-item">
-                <div class="order-header" onclick="toggleOrderDetails(this)">
+                <div class="order-header">
                     <span class="order-id">Order #${orderId}</span>
                     <span class="order-date">${order.date}</span>
-                    <span class="order-status" style="background:${getStatusColor(order.status)};color:#fff;padding:5px 15px;border-radius:10px;">${order.status}</span>
-                    <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+                    <span class="order-status" style="background:${getStatusColor(order.status)};color:#fff;padding:5px 15px;border-radius:10px;">
+                        ${order.status}
+                    </span>
+                    <span class="order-actions">
+                         <span class="order-eye" data-order-id="${orderId}" style="cursor:pointer; margin-right:10px;">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                        <span class="download-receipt-icon" data-order-id="${orderId}" style="cursor:pointer;">
+                            <i class="fas fa-download"></i>
+                        </span>
+                    </span>
                 </div>
                 <div class="order-details" style="display: none;">
                     <div class="order-items">
                         ${order.items.map(item => {
-            // Remove 'L.E' and convert to number for calculations
             const price = parseFloat(item.price.toString().replace('L.E', '').trim());
-            const itemTotal = price * item.quantity;
+            const itemTotal = price * (item.quantity || 1);
             return `
                                 <div class="order-item-row">
-                                    <span>${item.name} (${item.quantity})</span>
+                                    <span>${item.name || ''} (${item.quantity})</span>
                                     <span>${itemTotal.toFixed(2)} L.E</span>
                                 </div>
                             `;
@@ -1052,26 +1015,99 @@ function renderOrdersList(orders, ordersList) {
             </div>
         `;
     }).join('');
+
+    document.querySelectorAll('.order-eye').forEach(icon => {
+        icon.addEventListener('click', function(event) {
+            event.stopPropagation();
+            const orderId = this.getAttribute('data-order-id');
+            showOrderSummaryPopup(orderId);
+        });
+    });
+    
+    document.querySelectorAll('.download-receipt-icon').forEach(icon => {
+        icon.addEventListener('click', function(event) {
+            event.stopPropagation();
+            const orderId = this.getAttribute('data-order-id');
+            // Redirect to the receipt page with the order ID
+            window.location.href = `order-receipt.html?orderId=${orderId}`;
+        });
+    });
 }
 
-// Toggle order details visibility
-function toggleOrderDetails(header) {
-    const orderItem = header.parentElement;
-    const details = orderItem.querySelector('.order-details');
-    const icon = header.querySelector('.toggle-icon i');
-
-    if (details.style.display === 'none') {
-        details.style.display = 'block';
-        icon.classList.remove('fa-chevron-down');
-        icon.classList.add('fa-chevron-up');
+function showOrderSummaryPopup(orderId) {
+    const popup = document.getElementById('orderSummaryPopup');
+    const popupContent = document.getElementById('orderSummaryContent');
+    
+    popup.style.display = 'flex';
+    popupContent.innerHTML = '<div class="loading">Loading order details...</div>';
+    
+    const db = firebase.firestore();
+    db.collection('orders').where('id', '==', orderId).limit(1).get()
+        .then(snapshot => {
+            if (!snapshot.empty) {
+                const order = snapshot.docs[0].data();
+                const totalAmount = order.items.reduce((total, item) => {
+                    const price = parseFloat(item.price.toString().replace('L.E', '').trim());
+                    return total + (price * item.quantity);
+                }, 0);
+                
+                popupContent.innerHTML = `
+                    <div class="order-info">
+                        <h2>Order Details</h2>
+                        <p><strong>Order ID:</strong> ${order.id}</p>
+                        <p><strong>Order Date:</strong> ${order.date}</p>
+                        <p><strong>Total Amount:</strong> ${totalAmount.toFixed(2)} L.E</p>
+                        <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
+                        <p><strong>Status:</strong> ${order.status}</p>
+                        <p><strong>Shipping Address:</strong> ${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.governorate}</p>
+                    </div>
+                    <div class="order-items">
+                        <h3>Items Ordered</h3>
+                        <ul>
+                            ${order.items.map(item => {
+                                const price = parseFloat(item.price.toString().replace('L.E', '').trim());
+                                const itemTotal = price * item.quantity;
+                                return `
+                                    <li>
+                                        <img src="${item.image}" alt="${item.name}" class="order-item-image">
+                                        <div class="order-item-details">
+                                            <p><strong>${item.name}</strong></p>
+                                            <p>Size: ${item.size}</p>
+                                            ${item.color ? `<p>Color: ${item.color}</p>` : ''}
+                                            <p>Quantity: ${item.quantity}</p>
+                                            <p>Price: ${price.toFixed(2)} L.E</p>
+                                            <p>Total: ${itemTotal.toFixed(2)} L.E</p>
+                                        </div>
+                                    </li>
+                                `;
+                            }).join('')}
+                        </ul>
+                    </div>
+                `;
     } else {
-        details.style.display = 'none';
-        icon.classList.remove('fa-chevron-up');
-        icon.classList.add('fa-chevron-down');
-    }
+                popupContent.innerHTML = '<p>Order details not found.</p>';
+            }
+        })
+        .catch(() => {
+            popupContent.innerHTML = '<p>Error loading order details.</p>';
+        });
 }
 
-// ... existing code ...
+// Function to close the popup
+function closeOrderSummaryPopup() {
+    const popup = document.getElementById('orderSummaryPopup');
+    popup.style.display = 'none';
+}
+
+// Close popup when clicking outside
+document.addEventListener('click', function(e) {
+    const popup = document.getElementById('orderSummaryPopup');
+    const popupContent = document.querySelector('.popup-content');
+    if (e.target === popup) {
+        popup.style.display = 'none';
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     if (document.querySelector('.profile-section')) {
         firebase.auth().onAuthStateChanged(function (user) {
@@ -1085,7 +1121,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-// ... existing code ...
 
 // Function to generate unique order ID
 function generateOrderId() {
@@ -1422,7 +1457,6 @@ function showSizeChart(button) {
     const sizeChartImage = productCard.querySelector('.size-chart-image');
 
     if (sizeChartImage) {
-        // عرض الصورة بطريقة مناسبة (يمكنك استخدام modal أو أي طريقة أخرى)
         const modal = document.createElement('div');
         modal.className = 'size-chart-modal';
         modal.innerHTML = `
@@ -1435,5 +1469,289 @@ function showSizeChart(button) {
     }
 }
 
+// Function to display favorite products on favorite.html
+async function displayFavoriteProducts() {
+    const favoriteProductsGrid = document.querySelector('.favorite-products-grid');
+    if (!favoriteProductsGrid) return; // Exit if not on the favorite page
 
+    const user = firebase.auth().currentUser;
+    if (!user) {
+        favoriteProductsGrid.innerHTML = '<p class="no-orders">Please sign in to view your favorites.</p>';
+        return;
+    }
+
+    const userId = user.uid;
+    const db = firebase.firestore();
+    const favoritesRef = db.collection('users').doc(userId).collection('favorites');
+
+    try {
+        const snapshot = await favoritesRef.orderBy('addedAt', 'desc').get();
+
+        if (snapshot.empty) {
+            favoriteProductsGrid.innerHTML = '<p class="no-orders">You have no favorite products yet.</p>';
+            return;
+        }
+
+        favoriteProductsGrid.innerHTML = ''; // Clear loading indicator
+        const productPromises = snapshot.docs.map(async doc => {
+            const favoriteData = doc.data();
+            // Assuming favoriteData contains product details (name, price, image, id)
+            // If it only contains productId, you would need to fetch product details from your products collection here
+            // For now, assuming product details are stored in the favorite document
+            return favoriteData;
+        });
+
+        const products = await Promise.all(productPromises);
+
+        // Use createProductCard to render favorite products
+        products.forEach(product => {
+            favoriteProductsGrid.innerHTML += createProductCard(product);
+        });
+
+        // After rendering, update the favorite icon appearance
+        checkFavoriteStatus();
+
+    } catch (error) {
+        console.error('Error fetching favorite products:', error);
+        favoriteProductsGrid.innerHTML = '<p class="no-orders">Error loading favorite products.</p>';
+    }
+}
+
+// Call displayFavoriteProducts on page load if on the favorite page
+document.addEventListener('DOMContentLoaded', () => {
+    // Other DOMContentLoaded logic...
+    
+    // Check favorite status on relevant pages
+    if (document.querySelector('.products-grid') || document.querySelector('.favorite-products-grid')) {
+         // Delay slightly to ensure product cards are rendered
+         setTimeout(() => {
+             checkFavoriteStatus();
+             // If on the favorite page, display favorite products
+             if (document.querySelector('.favorite-products-grid')) {
+                 displayFavoriteProducts();
+             }
+         }, 500);
+    }
+
+    // If on the favorite page initially (without products-grid), call displayFavoriteProducts
+    if (document.querySelector('.favorite-products-grid') && !document.querySelector('.products-grid')) {
+         displayFavoriteProducts();
+    }
+});
+// Quick View Zoom Logic
+(function(){
+  const img = document.getElementById('quickViewImage');
+  const container = img && img.closest('.quick-view-image');
+  if (!img || !container) return;
+
+  // --- Desktop: الزووم عند hover يتم بالـ CSS فقط ---
+
+  // --- Mobile: double tap أو pinch to zoom ---
+  let lastTap = 0;
+  let isZoomed = false;
+  let startX = 0, startY = 0, lastX = 0, lastY = 0;
+  let initialDistance = 0;
+  let pinchZoom = false;
+
+  function setTransform(x, y) {
+    img.style.transform = isZoomed ? `scale(2) translate(${x}px,${y}px)` : '';
+  }
+
+  function resetZoom() {
+    isZoomed = false;
+    img.classList.remove('zoomed');
+    img.style.transform = '';
+    lastX = lastY = 0;
+  }
+
+  function onTouchStart(e) {
+    if (e.touches.length === 2) {
+      // Pinch start
+      pinchZoom = true;
+      initialDistance = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      isZoomed = true;
+      img.classList.add('zoomed');
+      lastX = lastY = 0;
+    } else if (e.touches.length === 1 && isZoomed) {
+      startX = e.touches[0].clientX - lastX;
+      startY = e.touches[0].clientY - lastY;
+    }
+  }
+
+  function onTouchMove(e) {
+    if (pinchZoom && e.touches.length === 2) {
+      // Pinch to zoom (fixed at scale 2)
+      // Prevent default scroll
+      e.preventDefault();
+    } else if (isZoomed && e.touches.length === 1) {
+      e.preventDefault();
+      lastX = e.touches[0].clientX - startX;
+      lastY = e.touches[0].clientY - startY;
+      // Limit panning so image doesn't go out of bounds
+      const maxX = (img.offsetWidth * (2-1)) / 2;
+      const maxY = (img.offsetHeight * (2-1)) / 2;
+      lastX = Math.max(-maxX, Math.min(maxX, lastX));
+      lastY = Math.max(-maxY, Math.min(maxY, lastY));
+      img.style.transform = `scale(2) translate(${lastX}px,${lastY}px)`;
+    }
+  }
+
+  function onTouchEnd(e) {
+    if (pinchZoom && e.touches.length < 2) {
+      pinchZoom = false;
+    }
+  }
+
+  // Double tap to zoom
+  container.addEventListener('touchend', function(e) {
+    if (e.touches.length > 0) return;
+    const now = Date.now();
+    if (now - lastTap < 350) {
+      // Double tap
+      isZoomed = !isZoomed;
+      if (isZoomed) {
+        img.classList.add('zoomed');
+      } else {
+        resetZoom();
+      }
+    } else if (isZoomed) {
+      // Single tap while zoomed: reset
+      resetZoom();
+    }
+    lastTap = now;
+  });
+
+  container.addEventListener('touchstart', onTouchStart, {passive:false});
+  container.addEventListener('touchmove', onTouchMove, {passive:false});
+  container.addEventListener('touchend', onTouchEnd);
+
+  // Prevent scroll when zoomed
+  container.addEventListener('touchmove', function(e){
+    if (isZoomed) e.preventDefault();
+  }, {passive:false});
+
+  // Reset zoom on image change
+  window.addEventListener('hashchange', resetZoom);
+})();
+
+document.getElementById('newsletter-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('subscriber-email').value;
+    
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+        showToast('Please login first to subscribe', 'error');
+        return;
+    }
+
+    // Check if already subscribed
+    const existingSub = await db.collection('subscribers')
+        .where('email', '==', email)
+        .get();
+
+    if (!existingSub.empty) {
+        showToast('You are already subscribed!', 'info');
+        return;
+    }
+
+    // Generate unique subscriber ID
+    let subscriberId;
+    let isUnique = false;
+    
+    while (!isUnique) {
+        const randomNum = Math.floor(100 + Math.random() * 900);
+        subscriberId = `XKS-${randomNum}`;
+        
+        // Check if ID exists
+        const docRef = await db.collection('subscribers').doc(subscriberId).get();
+        if (!docRef.exists) {
+            isUnique = true;
+        }
+    }
+
+    // Save subscription with custom ID
+    db.collection('subscribers').doc(subscriberId).set({
+        email: email,
+        userId: currentUser.uid,
+        userName: currentUser.displayName || 'Anonymous',
+        subscriberId: subscriberId,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+        showToast('Thank you for subscribing!', 'success');
+        document.getElementById('subscriber-email').value = '';
+    })
+    .catch((error) => {
+        showToast('Error: ' + error.message, 'error');
+    });
+});
+
+// Contact Form Submission
+console.log('Script loaded'); // Check if script is loaded
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded'); // Check if page is loaded
+    
+    const contactForm = document.getElementById('contact-form');
+    console.log('Contact form element:', contactForm); // Check if form is found
+    
+    if (contactForm) {
+        console.log('Adding submit event listener');
+        contactForm.addEventListener('submit', function(e) {
+            console.log('Form submitted');
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            console.log('Form values:', { name, email, message });
+            
+            // Validate all fields are filled
+            if (!name || !email || !message) {
+                console.log('Form validation failed: empty fields');
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                console.log('Form validation failed: invalid email');
+                showToast('Please enter a valid email address', 'error');
+                return;
+            }
+
+            console.log('Attempting to save to Firestore');
+            // Save to Firestore
+            const db = firebase.firestore();
+            db.collection('contacts').add({
+                name: name,
+                email: email,
+                message: message,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                status: 'new',
+                read: false
+            })
+            .then(() => {
+                console.log('Message saved successfully');
+                showToast('Message sent successfully!', 'success');
+                // Clear form
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('message').value = '';
+            })
+            .catch((error) => {
+                console.error('Error sending message:', error);
+                showToast('Error sending message. Please try again.', 'error');
+            });
+        });
+    } else {
+        console.log('Contact form not found in the DOM');
+    }
+});
 

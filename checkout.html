@@ -93,6 +93,13 @@
 
     <!-- Pinterest Verification -->
     <meta name="p:domain_verify" content="your_pinterest_verification_code">
+
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+      (function(){
+        emailjs.init("CECnv_SrGb9yQDxNj"); 
+      })();
+    </script>
 </head>
 <body>
     <!-- Navbar -->
@@ -105,8 +112,14 @@
         <a href="index.html" class="nav-logo">XKOOZA</a>
         <div class="nav-links">
             <a href="index.html" >Home</a>
-            <a href="collections.html">Collections</a>
-            <a href="about.html">About</a>
+            <div class="dropdown">
+                <a href="collections.html" class="dropbtn">Collections</a>
+                <div class="dropdown-content">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>            <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
         </div>
         <div class="mobile-nav-links">
@@ -173,10 +186,6 @@
             <div class="checkout-form-container">
                 <form id="payment-form"  
                       name="payment-form" 
-                      method="POST" 
-                      data-netlify="true" 
-                      netlify-honeypot="bot-field"
-                      enctype="multipart/form-data"
                       onsubmit="handleOrderSubmission(event)">
                   
                   <!-- Add these hidden inputs for Netlify -->
@@ -249,7 +258,7 @@
                           <div class="payment-option">
                               <label class="payment-option-label" data-payment="cash">
                                   <i class="fas fa-money-bill"></i>
-                                  Cash on Delivery
+                                  Cash on Delivery (COD)
                               </label>
                           </div>
                       </div>
@@ -489,10 +498,12 @@
                 totalAmount: totalAmount.toFixed(2) + ' L.E'
             };
             
-            // Add user ID if logged in
+            // Add user ID if logged in, else set to "no user"
             const user = firebase.auth().currentUser;
             if (user) {
                 orderData.userId = user.uid;
+            } else {
+                orderData.userId = "no user";
             }
             
             // Save order to Firebase
@@ -507,12 +518,14 @@
                         orderData.id = `XK-${randomNum}${timestamp}`;
                     }
                     
-                    // Add the order to Firestore
-                    return db.collection('orders').add(orderData);
+                    // Save order using orderId as document ID
+                    return db.collection('orders').doc(orderData.id).set(orderData);
                 })
                 .then(() => {
                     // Clear cart after successful order
                     localStorage.removeItem('cart');
+                    // Send order email
+                    sendOrderEmail(orderData);
                     
                     // Show success message
                     showToast('Order placed successfully!', 'success');
@@ -532,6 +545,69 @@
                     }
                 });
         }
+    </script>
+
+    <script>
+   function sendOrderEmail(orderData) {
+    const form = document.createElement('form');
+    form.style.display = 'none';
+
+    // بيانات الشحن
+    for (const key in orderData.shippingInfo) {
+        const input = document.createElement('input');
+        input.name = key;
+        input.value = orderData.shippingInfo[key];
+        form.appendChild(input);
+    }
+
+    // بيانات عامة
+    const generalFields = ['paymentMethod', 'status', 'totalAmount', 'id', 'date'];
+    generalFields.forEach(key => {
+        const input = document.createElement('input');
+        input.name = key;
+        input.value = orderData[key];
+        form.appendChild(input);
+    });
+
+    // Generate HTML for items
+    let itemsHtml = '<div style="font-family: \'Comic Sans MS\', \'Comic Sans\', cursive, Arial, sans-serif;"><h3>Items Ordered:</h3><table style="width: 100%; border-collapse: collapse;">';
+    orderData.items.forEach((item, idx) => {
+        itemsHtml += `
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 15px 0; vertical-align: top;">
+                    <p style="margin: 0 0 5px 0; font-weight: bold;">#${idx + 1}: ${item.name}</p>
+                    <p style="margin: 5px 0;">Color: ${item.color || 'N/A'}</p>
+                    <p style="margin: 5px 0;">Quantity: ${item.quantity}</p>
+                    <p style="margin: 5px 0;">Price: ${item.price}</p>
+                </td>
+                <td style="padding: 15px 0; vertical-align: top; width: 120px; text-align: right;">
+                    ${item.image ? `<img src="${item.image}" alt="${item.name}" style="max-width: 100px; height: auto; display: block; margin-left: auto; border-radius: 4px;">` : ''}
+                </td>
+            </tr>
+        `;
+    });
+    itemsHtml += '</table></div>';
+
+    const itemsHtmlInput = document.createElement('input');
+    itemsHtmlInput.name = 'items_html';
+    itemsHtmlInput.value = itemsHtml;
+    itemsHtmlInput.type = 'hidden';
+    form.appendChild(itemsHtmlInput);
+
+    document.body.appendChild(form);
+
+    emailjs.sendForm("Xkooza", "xkooza", form)
+        .then(() => {
+        console.log("Order email sent successfully");
+        })
+        .catch(err => {
+        console.error("Error sending order email", err);
+        })
+        .finally(() => {
+        document.body.removeChild(form);
+        });
+    }
+
     </script>
 </body>
 </html> 

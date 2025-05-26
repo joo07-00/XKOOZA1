@@ -1,26 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XKOOZA - Old Money Egyptian Streetwear Brand</title>
-    <meta name="description"
-        content="XKOOZA - Egypt's premium old money streetwear fashion brand offering unique urban clothing collections with timeless elegance. Shop our latest summer and winter collections featuring contemporary Egyptian old money designs. Free shipping available.">
-    <meta name="keywords"
-        content="XKOOZA, old money, Egyptian streetwear, urban fashion, timeless fashion, Cairo fashion, summer collection, winter collection, premium streetwear">
-
+    <meta name="description" content="XKOOZA - Egypt's premium old money streetwear fashion brand offering unique urban clothing collections with timeless elegance. Shop our latest summer and winter collections featuring contemporary Egyptian old money designs. Free shipping available.">
+    <meta name="keywords" content="XKOOZA, old money, Egyptian streetwear, urban fashion, timeless fashion, Cairo fashion, summer collection, winter collection, premium streetwear">
+    
     <!-- Google Analytics with performance optimizations -->
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="preconnect" href="https://www.google-analytics.com">
-
+    
     <!-- Google tag (gtag.js) with async -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QZHPB9RD6D"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+        function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
+        
         // Configure analytics with additional settings
         gtag('config', 'G-QZHPB9RD6D', {
             'anonymize_ip': true,
@@ -33,9 +30,7 @@
     <!-- External Libraries -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
@@ -74,13 +69,18 @@
         ]
     }
     </script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+      (function(){
+        emailjs.init("oVNTgz_VDDCRXKWqF");
+      })();
+    </script>
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://xkooza.netlify.app/">
     <meta property="og:title" content="XKOOZA - Old Money Egyptian Streetwear Fashion & Urban Clothing Brand">
-    <meta property="og:description"
-        content="XKOOZA - Egypt's premium old money streetwear fashion brand offering unique urban clothing collections with timeless elegance. Shop our latest summer and winter collections featuring contemporary Egyptian old money designs.">
+    <meta property="og:description" content="XKOOZA - Egypt's premium old money streetwear fashion brand offering unique urban clothing collections with timeless elegance. Shop our latest summer and winter collections featuring contemporary Egyptian old money designs.">
     <meta property="og:image" content="https://xkooza.netlify.app/assets/xkooza.png">
     <meta property="og:site_name" content="XKOOZA">
     <meta property="og:locale" content="en_US">
@@ -92,8 +92,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://xkooza.netlify.app/">
     <meta name="twitter:title" content="XKOOZA - Old Money Egyptian Streetwear Fashion & Urban Clothing Brand">
-    <meta name="twitter:description"
-        content="XKOOZA - Egypt's premium old money streetwear fashion brand offering unique urban clothing collections with timeless elegance. Shop our latest collections.">
+    <meta name="twitter:description" content="XKOOZA - Egypt's premium old money streetwear fashion brand offering unique urban clothing collections with timeless elegance. Shop our latest collections.">
     <meta name="twitter:image" content="https://xkooza.netlify.app/assets/xkooza.png">
     <meta name="twitter:image:alt" content="XKOOZA Logo">
 
@@ -115,7 +114,6 @@
     <!-- Pinterest Verification -->
     <meta name="p:domain_verify" content="your_pinterest_verification_code">
 </head>
-
 <body>
     <!-- Add this right after the opening <body> tag -->
     <div class="terms-popup" id="termsPopup">
@@ -142,7 +140,14 @@
         <a href="index.html" class="nav-logo">XKOOZA</a>
         <div class="nav-links">
             <a href="index.html" class="active">Home</a>
-            <a href="collections.html">Collections</a>
+            <div class="dropdown">
+                <a href="collections.html" class="dropbtn">Collections</a>
+                <div class="dropdown-content">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
         </div>
@@ -159,21 +164,18 @@
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
             <div class="mobile-social-links">
-                <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon" target="_blank"
-                    rel="noopener noreferrer">
+                <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-instagram"></i> Instagram
                 </a>
-                <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon" target="_blank"
-                    rel="noopener noreferrer">
+                <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-tiktok"></i> TikTok
                 </a>
-                <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon" target="_blank"
-                    rel="noopener noreferrer">
+                <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-facebook"></i> Facebook
                 </a>
             </div>
         </div>
-
+       
         <div class="cart-icon-container">
             <a href="checkout.html" class="cart-icon">
                 <i class="fas fa-shopping-cart"></i>
@@ -195,17 +197,12 @@
         <div class="landing-content">
             <div class="left-content">
                 <div class="cta-content">
-                    <button class="shop-now-btn" data-aos="fade-up"
-                        onclick="window.location.href='collections.html'">Shop Now</button>
+                    <button class="shop-now-btn" data-aos="fade-up" onclick="window.location.href='collections.html'">Shop Now</button>
                     <div class="social-links" data-aos="fade-left">
-                        <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon"><i
-                                class="fab fa-instagram"></i></a>
-                        <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon"><i
-                                class="fab fa-tiktok"></i></a>
-                        <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon"><i
-                                class="fab fa-facebook"></i></a>
-                        <a href="https://www.snapchat.com/add/xkooza7?share_id=AQuoje-4wLU&locale=en-US"
-                            class="social-icon"><i class="fab fa-snapchat"></i></a>
+                        <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.snapchat.com/add/xkooza7?share_id=AQuoje-4wLU&locale=en-US" class="social-icon"><i class="fab fa-snapchat"></i></a>
                     </div>
 
                 </div>
@@ -222,21 +219,15 @@
     <!-- Collections Preview Section -->
     <section id="collections" class="collections-preview">
         <h2 class="section-title">Latest Collection</h2>
-        <p data-aos="fade-up" data-aos-delay="200">Discover our newest designs that blend urban culture with
-            contemporary fashion.</p>
-        <a href="last-collection.html" class="view-collection-btn" data-aos="fade-up" data-aos-delay="400">View
-            Collection</a>
+        <p data-aos="fade-up" data-aos-delay="200">Discover our newest designs that blend urban culture with contemporary fashion.</p>
+        <a href="last-collection.html" class="view-collection-btn" data-aos="fade-up" data-aos-delay="400">View Collection</a>
     </section>
 
     <!-- Brief About Section -->
     <section class="brief-about">
         <div class="brief-about-content">
             <h2 data-aos="fade-up">Our Story</h2>
-            <p data-aos="fade-up" data-aos-delay="200">XKOOZA was born from the creative synergy of six friends united
-                by our passion for streetwear and urban culture. Each bringing unique perspectives and skills to the
-                table, we transformed our shared vision into a brand that pushes the boundaries of contemporary fashion
-                with our distinctive "old money" aesthetic that combines timeless elegance with modern urban
-                sensibilities.</p>
+            <p data-aos="fade-up" data-aos-delay="200">XKOOZA was born from the creative synergy of six friends united by our passion for streetwear and urban culture. Each bringing unique perspectives and skills to the table, we transformed our shared vision into a brand that pushes the boundaries of contemporary fashion with our distinctive "old money" aesthetic that combines timeless elegance with modern urban sensibilities.</p>
             <a href="about.html" class="shop-now-btn" data-aos="fade-up" data-aos-delay="400">Learn More About Us</a>
         </div>
     </section>
@@ -257,7 +248,7 @@
         </div>
     </section>
 
-
+   
 
     <!-- Footer -->
     <footer>
@@ -286,12 +277,9 @@
             <div class="footer-section">
                 <h3>Connect With Us</h3>
                 <div class="social-links">
-                    <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon"><i
-                            class="fab fa-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon"><i
-                            class="fab fa-tiktok"></i></a>
-                    <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon"><i
-                            class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/_xkooza?igsh=bHJmd3FwajY0cmhr" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/share/19wx7EieiN/" class="social-icon"><i class="fab fa-facebook"></i></a>
                 </div>
             </div>
         </div>
@@ -334,11 +322,23 @@
                     cartIcon.insertBefore(cartIconElement, badge);
                 }
             }
-
+            
             // Update the badge
             updateCartBadge();
         });
     </script>
+    <script>
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+    
+          emailjs.sendForm('XKOOZa', 'xkooza7', this)
+            .then(function(response) {
+           
+            }, function(error) {
+            
+            });
+        });
+        </script>
     <div class="brand-mark" id="brandMark">
         <img src="assets/logo.png" alt="XKooza Brand Mark">
     </div>
@@ -378,19 +378,4 @@
     <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics-compat.js"></script>
     <script src="auth.js"></script>
 </body>
-
-</html>
-<div class="mobile-social-links" id="mobileAccountSection">
-    <!-- سيتم استبدال هذا المحتوى ديناميًا بالجافاسكريبت حسب حالة تسجيل الدخول -->
-    <div class="account-info logged-in" style="display: none;">
-        <div class="account-name" id="accountName">اسم المستخدم</div>
-        <div class="account-email" id="accountEmail" style="font-size: 12px; color: #888;">user@email.com</div>
-        <button class="signout-btn" id="signOutBtn">Sign Out</button>
-    </div>
-    <div class="account-actions logged-out" style="display: none;">
-        <button class="signin-btn" onclick="window.location.href='signin.html'">Sign In</button>
-        <button class="signup-btn" onclick="window.location.href='signup.html'">Sign Up</button>
-    </div>
-</div>
-
-</html>
+</html> 

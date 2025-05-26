@@ -58,10 +58,14 @@
             <div class="action-buttons">
                 <a href="last-collection.html" class="btn primary-btn">Continue Shopping</a>
                 <a href="profile.html" class="btn secondary-btn">View Order Status</a>
+                <a href="#" id="download-receipt-btn" class="btn secondary-btn"><i class="fas fa-download"></i> Download Receipt</a>
             </div>
+
+            <svg id="orderBarcode" style="max-width:220px; margin-top:20px;"></svg>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <script>
         // Get the order from Firebase
         function displayOrderSummary() {
@@ -98,6 +102,15 @@
                         const orderData = snapshot.docs[0].data();
                         console.log("Order found:", orderData);
                         renderOrder(orderData);
+                        setupDownloadButton(orderId);
+                        if (orderData && orderData.id) {
+                            JsBarcode("#orderBarcode", orderData.id, {
+                                format: "CODE128",
+                                width: 2,
+                                height: 80,
+                                displayValue: true
+                            });
+                        }
                     } else {
                         console.log("No order found with ID:", orderId);
                         
@@ -163,6 +176,14 @@
 
         // Display order summary when page loads
         document.addEventListener('DOMContentLoaded', displayOrderSummary);
+
+        // Function to set up the download button link
+        function setupDownloadButton(orderId) {
+            const downloadBtn = document.getElementById('download-receipt-btn');
+            if (downloadBtn) {
+                downloadBtn.href = `order-receipt.html?orderId=${orderId}`;
+            }
+        }
     </script>
 </body>
 

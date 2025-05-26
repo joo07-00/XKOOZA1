@@ -99,7 +99,6 @@
     <meta property="og:see_also" content="https://www.tiktok.com/@x.kooza?_t=ZS-8usVJyeQSXg&_r=1">
 
     <!-- Pinterest Verification -->
-    <meta name="p:domain_verify" content="your_pinterest_verification_code">
 </head>
 <body>
     <!-- Navbar -->
@@ -112,7 +111,14 @@
         <a href="index.html" class="nav-logo">XKOOZA</a>
         <div class="nav-links">
             <a href="index.html">Home</a>
-            <a href="collections.html">Collections</a>
+            <div class="dropdown">
+                <a href="collections.html" class="dropbtn">Collections</a>
+                <div class="dropdown-content">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>
             <a href="about.html">About</a>
             <a href="contact.html" class="active">Contact</a>
         </div>
@@ -192,7 +198,7 @@
                 </div>
 
                 <div class="contact-form-container">
-                    <form id="contact-form" class="contact-form" netlify>
+                    <form id="contact-form" class="contact-form">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" required>
@@ -202,11 +208,14 @@
                             <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
+                            <label for="orderId">Order Number</label>
+                            <input type="text" id="orderId" name="orderId" value="XK-" required pattern="XK-[0-9A-Za-z]+" style="font-family:monospace;">
+                        </div>
+                        <div class="form-group">
                             <label for="message">Message</label>
                             <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
                         <button type="submit" class="submit-btn">Send Message</button>
-                        <p class="contact-note">Thanks for your message! #XKOOZA, reach out to us on WhatsApp or our social media channels.</p>
                     </form>
                 </div>
             </div>
@@ -251,18 +260,168 @@
             </div>
         </footer>    
     <!-- Scripts -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="auth.js"></script>
     <script src="script.js"></script>
+
     <script>
+    // Firebase config
+    const firebaseConfig = {
+        apiKey: "AIzaSyDXD3eGdW3oMd8rrF_ioGz9TXTGqp0Lzs0",
+        authDomain: "xkooza-website.firebaseapp.com",
+        projectId: "xkooza-website",
+    };
+
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
         // Initialize AOS
         AOS.init({
             duration: 1000,
             once: true
         });
-    </script>
-    <script>
+
+    // Handle user authentication state
+    auth.onAuthStateChanged(function(user) {
+        const userIcon = document.getElementById('userIcon');
+        const userDropdown = document.getElementById('userDropdown');
+        
+        if (user) {
+            console.log('User is logged in:', user.email);
+            // Update UI for logged in user
+            userIcon.href = 'profile.html';
+            document.getElementById('email').value = user.email;
+            document.getElementById('email').readOnly = true;
+            
+            // Update user dropdown
+            const dropdown = userIcon.querySelector('.user-dropdown');
+            dropdown.innerHTML = `
+                <a href="profile.html">Profile</a>
+                <a href="orders.html">Orders</a>
+                <a href="index.html" id="signOutBtn">Sign Out</a>
+            `;
+            
+            // Add sign out functionality
+            document.getElementById('signOutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                auth.signOut().then(() => {
+                    window.location.href = 'index.html';
+                }).catch((error) => {
+                    showToast('Error signing out: ' + error.message, 'error');
+                });
+            });
+        } else {
+            console.log('No user is logged in');
+            // Update UI for logged out user
+            userIcon.href = 'signin.html';
+            document.getElementById('email').readOnly = false;
+            
+            // Update user dropdown
+            const dropdown = userIcon.querySelector('.user-dropdown');
+            dropdown.innerHTML = `
+                <a href="signin.html">Sign In</a>
+                <a href="signup.html">Sign Up</a>
+            `;
+        }
+    });
+
+    // Contact form handling
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM fully loaded');
+        
+        const orderInput = document.getElementById('orderId');
+        const contactForm = document.getElementById('contact-form');
+
+        if (!orderInput || !contactForm) {
+            console.error('Could not find form elements!');
+            return;
+        }
+
+        // Handle order number input
+        orderInput.addEventListener('input', function(e) {
+            if (!this.value.startsWith('XK-')) {
+                this.value = 'XK-';
+            }
+        });
+
+        // Handle form submission
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            console.log('Form submitted');
+
+            const user = auth.currentUser;
+            if (!user) {
+                showToast('Please sign in to submit the form', 'error');
+                setTimeout(() => {
+                    window.location.href = 'signin.html';
+                }, 2000);
+                return;
+            }
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const orderId = document.getElementById('orderId').value.trim();
+            const message = document.getElementById('message').value;
+
+            if (!orderId.startsWith('XK-') || orderId.length <= 3) {
+                showToast('Please enter a valid order number after XK-', 'error');
+                return;
+            }
+
+            console.log('Sending data to Firestore...');
+            try {
+                await db.collection('contactMessages').add({
+                    name,
+                    email,
+                    orderId,
+                    message,
+                    userId: user.uid,
+                    userEmail: user.email,
+                    createdAt: new Date().toISOString()
+                });
+                
+                console.log('Message sent successfully');
+                showToast('Message sent successfully!', 'success');
+                contactForm.reset();
+                orderInput.value = 'XK-';
+            } catch (err) {
+                console.error('Error sending message:', err);
+                showToast('Error sending message: ' + err.message, 'error');
+            }
+        });
+    });
+
+    // Toast notification function
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        // Trigger animation
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+
+        // Remove toast after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 300);
+        }, 3000);
+    }
+
         // Initialize cart badge
         document.addEventListener('DOMContentLoaded', () => {
             const cartIcon = document.querySelector('.cart-icon');
@@ -290,6 +449,7 @@
             updateCartBadge();
         });
     </script>
+
     <div class="brand-mark" id="brandMark">
         <img src="assets/logo.png" alt="XKooza Brand Mark">
     </div>
@@ -321,67 +481,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics-compat.js"></script>
-    <script src="auth.js"></script>   
-    <!-- Firebase Config -->
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDqBWf2jaKYrJdjpOq8Yoa1_OoMVn4TGsQ",
-            authDomain: "xkooza-072.firebaseapp.com",
-            projectId: "xkooza-072",
-            storageBucket: "xkooza-072.firebasestorage.app",
-            messagingSenderId: "530733516957",
-            appId: "1:530733516957:web:8ad9b191a8902211dcec74",
-            measurementId: "G-PLYZLT365D"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const analytics = firebase.analytics();
-
-        // Update UI based on auth state
-        auth.onAuthStateChanged(function(user) {
-            const userIcon = document.querySelector('.user-icon');
-            const userDropdown = document.querySelector('.user-dropdown');
-            
-            if (user) {
-                // User is signed in
-                if (userIcon) {
-                    userIcon.innerHTML = '<i class="fas fa-user-check"></i>';
-                }
-                if (userDropdown) {
-                    userDropdown.innerHTML = `
-                        <a href="profile.html">Profile</a>
-                        <a href="#" id="signOutBtn">Sign Out</a>
-                    `;
-                    // Add sign out functionality
-                    document.getElementById('signOutBtn').addEventListener('click', function(e) {
-                        e.preventDefault();
-                        auth.signOut().then(() => {
-                            window.location.href = 'index.html';
-                        });
-                    });
-                }
-            } else {
-                // No user is signed in
-                if (userIcon) {
-                    userIcon.innerHTML = '<i class="fas fa-user"></i>';
-                }
-                if (userDropdown) {
-                    userDropdown.innerHTML = `
-                        <a href="signin.html">Sign In</a>
-                        <a href="signup.html">Sign Up</a>
-                    `;
-                }
-            }
-        });
-    </script>
 </body>
 </html> 

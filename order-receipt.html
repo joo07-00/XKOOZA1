@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Receipt - XKOOZA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
+</head>
+<body>
+    <div class="receipt-container">
+        <div class="receipt-header">
+            <div class="receipt-logo">XKOOZA</div>
+            <div class="receipt-meta">
+                <p id="receiptDate"></p>
+                <p id="receiptOrderId"></p>
+            </div>
+        </div>
+
+        <div class="receipt-section">
+            <h3>BILLED TO:</h3>
+            <p id="billingName"></p>
+            <p id="billingPhone"></p>
+            <p id="billingAddress"></p>
+        </div>
+
+        <div class="receipt-section items-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ITEM</th>
+                        <th>QUANTITY</th>
+                        <th>UNIT PRICE</th>
+                        <th>SUBTOTAL</th>
+                    </tr>
+                </thead>
+                <tbody id="receiptItems">
+                    <!-- Items will be injected here by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="receipt-section totals">
+            <p>Subtotal: <span id="receiptSubtotal"></span></p>
+            <p>Tax (0%): <span id="receiptTax"></span></p>
+            <p>Discount: <span id="receiptDiscount"></span></p>
+            <p class="total">TOTAL <span id="receiptTotal"></span></p>
+        </div>
+
+        <div class="receipt-footer">
+            <div class="receipt-section payment-method">
+                <h3>PAYMENT METHOD</h3>
+                <p id="receiptPaymentMethod"></p>
+            </div>
+
+            <div class="receipt-section contact-info">
+                <h3>ALDENAIRE & PARTNERS</h3>
+                <p>01033355330</p>
+                <p>xkooza7@gmail.com</p>
+                <p>https://xkooza.netlify.app/</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics-compat.js"></script>
+    <script>
+        // Firebase Config - Make sure this matches your project config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDqBWf2jaKYrJdjpOq8Yoa1_OoMVn4TGsQ",
+            authDomain: "xkooza-072.firebaseapp.com",
+            projectId: "xkooza-072",
+            storageBucket: "xkooza-072.firebasestorage.app",
+            messagingSenderId: "530733516957",
+            appId: "1:530733516957:web:8ad9b191a8902211dcec74",
+            measurementId: "G-PLYZLT365D"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId');
+
+            if (!orderId) {
+                document.querySelector('.receipt-container').innerHTML = '<p>No order ID provided.</p>';
+                return;
+            }
+
+            db.collection('orders').where('id', '==', orderId).limit(1).get()
+                .then(snapshot => {
+                    if (!snapshot.empty) {
+                        const order = snapshot.docs[0].data();
+                        displayOrderDetails(order);
+                    } else {
+                        document.querySelector('.receipt-container').innerHTML = '<p>Order details not found. Please contact customer support.</p>';
+                    }
+                })
+                .catch(error => {
+                    document.querySelector('.receipt-container').innerHTML = '<p>Error loading order details. Please try again later.</p>';
+                });
+
+            function displayOrderDetails(order) {
+                document.getElementById('receiptDate').textContent = order.date || '';
+                document.getElementById('receiptOrderId').textContent = `Order Id: ${order.id || ''}`;
+                document.getElementById('billingName').textContent = order.shippingInfo?.name || '';
+                document.getElementById('billingPhone').textContent = order.shippingInfo?.phone || '';
+                document.getElementById('billingAddress').textContent = `${order.shippingInfo?.address || ''}, ${order.shippingInfo?.city || ''}, ${order.shippingInfo?.governorate || ''}`;
+
+                const itemsBody = document.getElementById('receiptItems');
+                itemsBody.innerHTML = '';
+
+                let subtotal = 0;
+                order.items.forEach(item => {
+                    const price = parseFloat(item.price?.toString().replace('L.E', '').trim()) || 0;
+                    const itemTotal = price * (item.quantity || 1);
+                    subtotal += itemTotal;
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.name || ''}</td>
+                        <td>${item.quantity || 1}</td>
+                        <td>${price.toFixed(2)} L.E</td>
+                        <td>${itemTotal.toFixed(2)} L.E</td>
+                    `;
+                    itemsBody.appendChild(row);
+                });
+
+                const tax = 0;
+                const discount = 0;
+                const total = subtotal + tax - discount;
+
+                document.getElementById('receiptSubtotal').textContent = `${subtotal.toFixed(2)} L.E`;
+                document.getElementById('receiptTax').textContent = `${tax.toFixed(2)} L.E`;
+                document.getElementById('receiptDiscount').textContent = `${discount.toFixed(2)} L.E`;
+                document.getElementById('receiptTotal').textContent = `${total.toFixed(2)} L.E`;
+
+                document.getElementById('receiptPaymentMethod').textContent = order.paymentMethod || '';
+
+                // اطبع تلقائي بعد عرض التفاصيل
+                window.print();
+            }
+        });
+    </script>
+</body>
+</html> 

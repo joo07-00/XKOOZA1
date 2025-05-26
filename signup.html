@@ -14,6 +14,12 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/logo.png">
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+      (function(){
+        emailjs.init("CECnv_SrGb9yQDxNj");
+      })();
+    </script>
 </head>
 <body>
      <!-- Navbar -->
@@ -26,7 +32,14 @@
         <a href="index.html" class="nav-logo">XKOOZA</a>
         <div class="nav-links">
             <a href="index.html">Home</a>
-            <a href="collections.html">Collections</a>
+            <div class="dropdown">
+                <a href="collections.html" class="dropbtn">Collections</a>
+                <div class="dropdown-content">
+                    <a href="last-collection.html">Latest Collection</a>
+                    <a href="summer.html">Summer Collection</a>
+                    <a href="winter.html">Winter Collection</a>
+                </div>
+            </div>
             <a href="about.html">About</a>
             <a href="contact.html">Contact</a>
         </div>
@@ -83,16 +96,16 @@
 
                 <form id="signupForm" class="auth-form">
                     <div class="form-group">
-                        <input type="text" id="fullName" placeholder="Full Name" required>
+                        <input type="text" id="fullName" name="name" placeholder="Full Name" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" id="email" placeholder="Email Address" required>
+                        <input type="email" id="email"  name="email" placeholder="Email Address" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" id="password" placeholder="Password" required>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
                     </div>
                     <button type="submit" class="auth-btn">Sign Up</button>
                 </form>
@@ -259,7 +272,7 @@
         // Handle Sign Up
         document.getElementById('signupForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const name = document.getElementById('name').value
+            const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
@@ -275,11 +288,13 @@
                 .then((userCredential) => {
                     // Signed up successfully
                     const user = userCredential.user;
-                    console.log('Signed up:', user);
-                    
+                    // Update displayName in Firebase Auth
+                    return user.updateProfile({ displayName: fullName }).then(() => user);
+                })
+                .then((user) => {
                     // Add user to Firestore
                     return db.collection('users').doc(user.uid).set({
-                        displayName: user.displayName,
+                        fullName: fullName,
                         email: email,
                         createdAt: new Date(),
                     });
@@ -295,18 +310,18 @@
 
         // Handle Google Sign Up
         const googleBtn = document.querySelector('.google-auth');
+
         googleBtn.addEventListener('click', function(e) {
             e.preventDefault();
             const provider = new firebase.auth.GoogleAuthProvider();
-            // Add scopes for Google OAuth
             provider.addScope('profile');
             provider.addScope('email');
-            
+
             auth.signInWithPopup(provider)
                 .then((result) => {
                     const user = result.user;
                     const isNewUser = result.additionalUserInfo.isNewUser;
-                    
+
                     // Store user data in Firestore
                     return db.collection('users').doc(user.uid).set({
                         email: user.email,
@@ -314,7 +329,29 @@
                         photoURL: user.photoURL,
                         createdAt: isNewUser ? new Date() : firebase.firestore.FieldValue.serverTimestamp(),
                         lastLogin: new Date()
-                    }, { merge: true }); // Update without overwriting
+                    }, { merge: true }).then(() => {
+                        if (isNewUser) {
+                            const form = document.createElement('form');
+                            form.style.display = 'none';
+
+                            const nameInput = document.createElement('input');
+                            nameInput.name = 'name';
+                            nameInput.value = user.displayName;
+                            form.appendChild(nameInput);
+
+                            const emailInput = document.createElement('input');
+                            emailInput.name = 'email';
+                            emailInput.value = user.email;
+                            form.appendChild(emailInput);
+
+                            document.body.appendChild(form);
+
+                            return emailjs.sendForm("Xkooza", "xkoozasp", form)
+                                .finally(() => {
+                                    document.body.removeChild(form); 
+                                });
+                        }
+                    });
                 })
                 .then(() => {
                     showToast("Account created successfully!", 'success');
@@ -322,7 +359,6 @@
                 })  
                 .catch((error) => {
                     if (error.code === 'auth/popup-blocked') {
-                        // If popup is blocked, try redirect method
                         auth.signInWithRedirect(provider);
                     } else {
                         showToast('An error occurred while signing up with Google. Please try again.', 'error');
@@ -340,5 +376,17 @@
             showToast('An error occurred while signing up with Google. Please try again.', 'error');
         });
     </script>
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+    
+          emailjs.sendForm('Xkooza', 'xkoozasp', this)
+            .then(function(response) {
+           
+            }, function(error) {
+            
+            });
+        });
+        </script>
 </body>
 </html> 

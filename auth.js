@@ -17,7 +17,6 @@ const db = firebase.firestore();
 // Function to update UI based on auth state
 function updateAuthUI(user) {
     const userIcon = document.querySelector('.user-icon');
-    const userDropdown = document.querySelector('.user-dropdown');
     
     if (user) {
         // User is signed in
@@ -357,14 +356,11 @@ document.addEventListener('DOMContentLoaded', () => {
 function saveOrderToFirebase(orderData) {
     const user = auth.currentUser;
     
-    if (!user) {
-        console.log('User not logged in, order only saved to localStorage');
-        return;
+    if (user) {
+        orderData.userId = user.uid;
+    } else {
+        orderData.userId = "no user";
     }
-    
-    // Add user ID to order data
-    orderData.userId = user.uid;
-    console.log('Saving order to Firebase:', orderData);
 
     // Add order to Firestore
     db.collection('orders').add(orderData)
